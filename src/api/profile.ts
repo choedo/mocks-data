@@ -1,0 +1,71 @@
+import supabase from '@/lib/supabase';
+import { getRandomNickname } from '@/lib/utils';
+import { deleteImagesInPath, uploadImage } from '@/api/image';
+
+export async function fetchProfile(userId: string) {
+  const { data, error } = await supabase
+    .from('profile')
+    .select('*')
+    .eq('profile_id', userId)
+    .single();
+
+  if (error) throw error;
+
+  return data;
+}
+
+export async function createProfile(userId: string) {
+  const { data, error } = await supabase
+    .from('profile')
+    .insert({
+      profile_id: userId,
+      nickname: getRandomNickname(),
+    })
+    .select()
+    .single();
+
+  if (error) throw error;
+
+  return data;
+}
+
+export async function updateProfile({
+  userId,
+  nickname,
+  avatarImageFile,
+}: {
+  userId: string;
+  nickname?: string;
+  avatarImageFile?: File;
+}) {
+  // 1. 기존 아바타 이미지 삭제
+  if (avatarImageFile) {
+    await deleteImagesInPath(`${userId}/avatar`);
+  }
+
+  // 2. 새로운 아바타 이미지 업로드
+  let newAvatarImageUrl;
+  if (avatarImageFile) {
+    const fileExtension = avatarImageFile.name.split('.').pop() || 'webp';
+    const filePath = `${userId}/avatar/${new Date().getTime()}-${crypto.randomUUID()}.${fileExtension}`;
+
+    newAvatarImageUrl = await uploadImage({
+      file: avatarImageFile,
+      filePath,
+    });
+  }
+
+  // 3. 프로필 업데이트
+  const { data, error } = await supabase
+    .from('profile')
+    .update({
+      nickname,
+      avatar_url: newAvatarImageUrl,
+    })
+    .eq('profile_id', userId)
+    .select()
+    .single();
+
+  if (error) throw error;
+  return data;
+}

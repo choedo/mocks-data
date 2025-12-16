@@ -11,20 +11,35 @@ export async function signOut() {
 }
 
 export async function signUp({
+  nickname,
   email,
   password,
 }: {
+  nickname: string;
   email: string;
   password: string;
 }) {
-  const { data, error } = await supabase.auth.signUp({
+  const { data: signUpData, error: signUpError } = await supabase.auth.signUp({
     email,
     password,
   });
 
-  if (error) throw error;
+  if (signUpError) throw signUpError;
 
-  return data;
+  if (signUpData.user) {
+    const { error: profileError } = await supabase
+      .from('profile')
+      .insert({
+        profile_id: signUpData.user.id,
+        nickname: nickname,
+      })
+      .select()
+      .single();
+
+    if (profileError) throw profileError;
+  }
+
+  return signUpData;
 }
 
 export async function signInWithPassword({
