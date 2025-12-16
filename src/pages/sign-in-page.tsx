@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { type KeyboardEvent } from 'react';
 import {
   Card,
   CardAction,
@@ -98,6 +98,12 @@ export default function SignInPage() {
     signInWithPassword({ email, password });
   };
 
+  const handlePressEnter = (e: KeyboardEvent<HTMLInputElement>) => {
+    if (e.code === 'Enter') {
+      handleLoginClick();
+    }
+  };
+
   const handleSignUpClick = () => {
     signUpModalOpen();
   };
@@ -140,6 +146,7 @@ export default function SignInPage() {
             placeholder={`Enter your email`}
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            onKeyDown={handlePressEnter}
             disabled={isPending}
           />
         </div>
@@ -154,6 +161,7 @@ export default function SignInPage() {
             placeholder={`Enter your password`}
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            onKeyDown={handlePressEnter}
             disabled={isPending}
           />
         </div>
