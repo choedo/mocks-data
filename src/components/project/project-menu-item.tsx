@@ -1,11 +1,32 @@
+import { QUERY_KEYS } from '@/constants/query-keys';
+import { useToggleProjectBookmark } from '@/hooks/project/use-toggle-project-bookmark';
 import type { ProjectEntity } from '@/types/data';
+import { useQueryClient } from '@tanstack/react-query';
 import { StarIcon } from 'lucide-react';
 import { Link } from 'react-router';
 
-export default function ProjectMenuItem(project: ProjectEntity) {
+type Props = {
+  projectId: number;
+};
+
+export default function ProjectMenuItem({ projectId }: Props) {
+  const queryClient = useQueryClient();
+  const project = queryClient.getQueryData<ProjectEntity>(
+    QUERY_KEYS.project.byId(projectId)
+  );
+
+  const { mutate: toggleProjectBookmark } = useToggleProjectBookmark();
+
+  if (!project) return;
+
   const isBookmark = project.is_bookmark;
 
-  const handleBookmarkClick = () => {};
+  const handleBookmarkClick = () => {
+    toggleProjectBookmark({
+      projectId: project.project_id,
+      current: isBookmark,
+    });
+  };
 
   return (
     <div

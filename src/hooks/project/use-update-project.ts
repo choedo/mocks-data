@@ -1,10 +1,10 @@
-import { deleteProject } from '@/api/project';
+import { updateProject } from '@/api/project';
 import type { UseMutationCallback } from '@/types/callbacks';
 import { useMutation } from '@tanstack/react-query';
 
-export function useCreateProject(callbacks?: UseMutationCallback) {
+export function useUpdateProject(callbacks?: UseMutationCallback) {
   return useMutation({
-    mutationFn: deleteProject,
+    mutationFn: updateProject,
     onSuccess: () => {
       if (callbacks?.onSuccess) callbacks.onSuccess();
     },

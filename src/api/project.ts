@@ -11,6 +11,25 @@ export async function fetchProjects(userId: string) {
   return data;
 }
 
+export async function duplicateCheckProjectName({
+  userId,
+  project_name,
+}: {
+  userId: string;
+  project_name: string;
+}): Promise<boolean> {
+  const { data, error } = await supabase
+    .from('project')
+    .select('*')
+    .eq('author_id', userId)
+    .eq('project_name', project_name);
+
+  if (error) throw error;
+
+  if (data.length > 0) return false;
+  else return true;
+}
+
 export async function createProject({
   project_name,
   project_description,
@@ -44,6 +63,7 @@ export async function updateProject(
       ...project,
       updated_at: updateDate,
     })
+    .eq('project_id', project.project_id)
     .select()
     .single();
 
@@ -63,21 +83,22 @@ export async function deleteProject(id: number) {
   return data;
 }
 
-export async function duplicateCheckProjectName({
-  userId,
-  project_name,
+export async function toggleProjectBookmark({
+  projectId,
+  current,
 }: {
-  userId: string;
-  project_name: string;
-}): Promise<boolean> {
+  projectId: number;
+  current: boolean;
+}) {
   const { data, error } = await supabase
     .from('project')
-    .select('*')
-    .eq('author_id', userId)
-    .eq('project_name', project_name);
+    .update({
+      is_bookmark: !current,
+    })
+    .eq('project_id', projectId)
+    .select()
+    .single();
 
   if (error) throw error;
-
-  if (data.length > 0) return false;
-  else return true;
+  return data;
 }
