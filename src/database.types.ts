@@ -83,6 +83,7 @@ export type Database = {
         Row: {
           author_id: string
           created_at: string
+          is_bookmark: boolean
           project_description: string | null
           project_id: number
           project_name: string
@@ -91,6 +92,7 @@ export type Database = {
         Insert: {
           author_id?: string
           created_at?: string
+          is_bookmark?: boolean
           project_description?: string | null
           project_id?: number
           project_name: string
@@ -99,6 +101,7 @@ export type Database = {
         Update: {
           author_id?: string
           created_at?: string
+          is_bookmark?: boolean
           project_description?: string | null
           project_id?: number
           project_name?: string
