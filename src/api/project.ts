@@ -69,7 +69,7 @@ export async function duplicateCheckProjectName({
 }: {
   userId: string;
   project_name: string;
-}) {
+}): Promise<boolean> {
   const { data, error } = await supabase
     .from('project')
     .select('*')
