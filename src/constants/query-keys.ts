@@ -6,8 +6,8 @@ export const QUERY_KEYS = {
   },
   project: {
     all: ['project'],
-    list: ['project', 'list'],
-    byId: (userId: string) => ['project', 'byId', userId],
+    list: (userId: string) => ['project', 'list', userId],
+    byId: (projectId: number) => ['project', 'byId', projectId],
     duplicate: ({
       userId,
       project_name,
