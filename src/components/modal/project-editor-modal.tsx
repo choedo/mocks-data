@@ -104,7 +104,9 @@ export default function ProjectEditorModal() {
               className={'min-h-30'}
             />
           </div>
-          <Button onClick={handleSubmitClick}>Submit</Button>
+          <Button onClick={handleSubmitClick} className={'cursor-pointer'}>
+            Submit
+          </Button>
         </div>
       </DialogContent>
     </Dialog>
