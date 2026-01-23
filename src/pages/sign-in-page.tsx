@@ -16,9 +16,9 @@ import validateCheck from '@/lib/validateCheck';
 import { toast } from 'sonner';
 import { Link, useNavigate } from 'react-router';
 import { useSignInWithPassword } from '@/hooks/auth/use-sign-in-with-password';
-import { generateErrorMessage } from '@/lib/error';
 import { useHandleSaveEmail, useSaveEmail } from '@/store/session';
 import { useOpenSignUpModal } from '@/store/sign-up-modal';
+import toastMessage from '@/lib/toastMessage';
 
 export default function SignInPage() {
   const navigate = useNavigate();
@@ -37,8 +37,8 @@ export default function SignInPage() {
   const { mutate: signInWithPassword, isPending: isSignInWithPasswordPending } =
     useSignInWithPassword({
       onError: (error) => {
-        const errorMessage = generateErrorMessage(error);
-        toast.error(errorMessage, { position: 'top-center' });
+        const errorMessage = error.message || 'Error';
+        toastMessage.error(errorMessage);
 
         setPassword('');
       },

@@ -1,5 +1,6 @@
 import GuestOnlyLayout from '@/components/layout/guest-only-layout';
 import MemberOnlyLayout from '@/components/layout/member-only-layout';
+import ForgetPasswordPage from '@/pages/forget-password-page';
 import IndexPage from '@/pages/index-page';
 import ProjectDetailPage from '@/pages/project-detail-page';
 import ResetPasswordPage from '@/pages/reset-password-page';
@@ -11,6 +12,7 @@ export default function RootRoute() {
     <Routes>
       <Route element={<GuestOnlyLayout />}>
         <Route path={'/sign-in'} element={<SignInPage />} />
+        <Route path={'/forget-password'} element={<ForgetPasswordPage />} />
       </Route>
 
       <Route element={<MemberOnlyLayout />}>

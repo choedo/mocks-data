@@ -10,7 +10,7 @@ function validateCheckEmail(email: string) {
 
 function validateCheckPassword(password: string) {
   const PASSWORD_REGEX =
-    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&()])[A-Za-z\d!@#$%^&()]{8,}$/;
 
   if (!PASSWORD_REGEX.test(password)) {
     return false;

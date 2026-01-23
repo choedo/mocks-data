@@ -1,8 +1,8 @@
+import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useUpdatePassword } from '@/hooks/auth/use-update-password';
 import toastMessage from '@/lib/toastMessage';
-import React from 'react';
 import { useNavigate } from 'react-router';
 import { signOut } from '@/api/auth';
 
@@ -33,7 +33,7 @@ export default function ResetPasswordPage() {
   };
 
   return (
-    <div className="flex flex-col gap-8">
+    <div className="w-full  max-w-sm flex flex-col gap-8">
       <div className="flex flex-col gap-1">
         <div className="text-xl font-bold">Reset Password</div>
         <div className="text-muted-foreground">Please enter a new password</div>

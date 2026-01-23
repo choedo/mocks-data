@@ -8,5 +8,12 @@ export const QUERY_KEYS = {
     all: ['project'],
     list: ['project', 'list'],
     byId: (userId: string) => ['project', 'byId', userId],
+    duplicate: ({
+      userId,
+      project_name,
+    }: {
+      userId: string;
+      project_name: string;
+    }) => ['project', 'duplicate', userId, project_name],
   },
 };

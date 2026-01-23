@@ -91,7 +91,7 @@ export default function SignUpModal() {
 
     if (!validateCheck.password(inputPassword)) {
       toastMessage.info(
-        'Must include uppercase, lowercase, number, and a special character (@, !, $, %, *, ?, &)'
+        'Must include uppercase, lowercase, number, and a special character (!, @, #, $, %, ^, (, ), &)'
       );
       if (passwordRef.current) passwordRef.current.focus();
       return;
@@ -121,6 +121,15 @@ export default function SignUpModal() {
       nickname: inputNickname,
     });
   };
+
+  React.useEffect(() => {
+    return () => {
+      setNickname('');
+      setEmail('');
+      setPassword('');
+      setRePassword('');
+    };
+  }, [isOpen]);
 
   const isPending = isSignUpPending;
 

@@ -62,3 +62,22 @@ export async function deleteProject(id: number) {
   if (error) throw error;
   return data;
 }
+
+export async function duplicateCheckProjectName({
+  userId,
+  project_name,
+}: {
+  userId: string;
+  project_name: string;
+}) {
+  const { data, error } = await supabase
+    .from('project')
+    .select('*')
+    .eq('author_id', userId)
+    .eq('project_name', project_name);
+
+  if (error) throw error;
+
+  if (data.length > 0) return false;
+  else return true;
+}
