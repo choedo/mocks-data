@@ -9,6 +9,7 @@ import { useUpdateProject } from '@/hooks/project/use-update-project';
 import toastMessage from '@/lib/toastMessage';
 import { useDuplicateCheckProjectName } from '@/hooks/project/use-duplicate-check-project-name';
 import { useSession } from '@/store/session';
+import ProjectBookmarkButton from '@/components/project/project-bookmark-button';
 
 type Props = {
   projectId: number;
@@ -75,6 +76,7 @@ export default function ProjectDetailInformation({ projectId }: Props) {
   }, [isEdit, projectData]);
 
   const isPending = isUpdateProjectPending || isDuplicateCheckLoading;
+  const isBookmark = projectData?.is_bookmark;
 
   return (
     <div className={'flex flex-col gap-2 border rounded-sm py-6 px-4 relative'}>
@@ -92,7 +94,15 @@ export default function ProjectDetailInformation({ projectId }: Props) {
               disabled={isPending}
             />
           ) : (
-            <h1 className={'text-2xl'}>{projectData.project_name}</h1>
+            <div className={'flex gap-2 items-center'}>
+              <ProjectBookmarkButton
+                projectId={projectId}
+                isBookmark={isBookmark}
+                width={24}
+                height={24}
+              />
+              <h1 className={'text-2xl'}>{projectData.project_name}</h1>
+            </div>
           )}
         </React.Fragment>
       )}
