@@ -91,6 +91,7 @@ export default function ProjectEditorModal() {
               onChange={(e) => setTitle(e.target.value)}
               placeholder={'Please enter a new project name'}
               disabled={isPending}
+              maxLength={50}
             />
           </div>
           <div className={'flex flex-col gap-2'}>
@@ -104,7 +105,11 @@ export default function ProjectEditorModal() {
               className={'min-h-30'}
             />
           </div>
-          <Button onClick={handleSubmitClick} className={'cursor-pointer'}>
+          <Button
+            onClick={handleSubmitClick}
+            className={'cursor-pointer'}
+            disabled={isPending}
+          >
             Submit
           </Button>
         </div>

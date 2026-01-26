@@ -11,7 +11,7 @@ export default function ProjectList() {
   const open = useOpenProjectEditorModal();
 
   const { data: projectIds, isLoading: isProjectFetch } = useProjectData(
-    session?.user.id
+    session?.user.id,
   );
 
   return (
@@ -30,7 +30,9 @@ export default function ProjectList() {
         {isProjectFetch ? (
           <ProjectMenuSkelton />
         ) : (
-          projectIds?.map((id: number) => <ProjectMenuItem projectId={id} />)
+          projectIds?.map((id: number) => (
+            <ProjectMenuItem key={`project-${id}`} projectId={id} />
+          ))
         )}
       </div>
     </div>

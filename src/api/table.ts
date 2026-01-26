@@ -3,7 +3,7 @@ import supabase from '@/lib/supabase';
 export async function fetchTables(projectId: number) {
   const { data, error } = await supabase
     .from('table')
-    .select('*, columns: column!table_id (*')
+    .select('*, columns: column!table_id (*)')
     .eq('project_id', projectId);
 
   if (error) throw error;

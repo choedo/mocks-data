@@ -1,4 +1,5 @@
 import { QUERY_KEYS } from '@/constants/query-keys';
+import { useProjectByIdData } from '@/hooks/project/use-project-by-id-data';
 import { useToggleProjectBookmark } from '@/hooks/project/use-toggle-project-bookmark';
 import type { ProjectEntity } from '@/types/data';
 import { useQueryClient } from '@tanstack/react-query';
@@ -10,20 +11,17 @@ type Props = {
 };
 
 export default function ProjectMenuItem({ projectId }: Props) {
-  const queryClient = useQueryClient();
-  const project = queryClient.getQueryData<ProjectEntity>(
-    QUERY_KEYS.project.byId(projectId)
-  );
+  const { data: projectData } = useProjectByIdData(projectId);
 
   const { mutate: toggleProjectBookmark } = useToggleProjectBookmark();
 
-  if (!project) return;
+  if (!projectData) return;
 
-  const isBookmark = project.is_bookmark;
+  const isBookmark = projectData.is_bookmark;
 
   const handleBookmarkClick = () => {
     toggleProjectBookmark({
-      projectId: project.project_id,
+      projectId: projectData.project_id,
       current: isBookmark,
     });
   };
@@ -49,8 +47,8 @@ export default function ProjectMenuItem({ projectId }: Props) {
       <div
         className={`text-sm line-clamp-2 wrap-break-words whitespace-pre-wrap`}
       >
-        <Link to={`/project/${project.project_id}`}>
-          {project.project_name}
+        <Link to={`/project/${projectData.project_id}`}>
+          {projectData.project_name}
         </Link>
       </div>
     </div>
