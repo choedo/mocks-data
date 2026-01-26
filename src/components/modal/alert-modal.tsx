@@ -7,8 +7,8 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from "@/components/ui/alert-dialog";
-import { useAlertModal } from "@/store/alert-modal";
+} from '@/components/ui/alert-dialog';
+import { useAlertModal } from '@/store/alert-modal';
 
 export default function AlertModal() {
   const store = useAlertModal();
@@ -30,13 +30,21 @@ export default function AlertModal() {
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>{store.title}</AlertDialogTitle>
-          <AlertDialogDescription>{store.description}</AlertDialogDescription>
+          <AlertDialogDescription asChild>
+            <pre>{store.description}</pre>
+          </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel onClick={handleCancelClick}>
+          <AlertDialogCancel
+            className={'cursor-pointer'}
+            onClick={handleCancelClick}
+          >
             취소
           </AlertDialogCancel>
-          <AlertDialogAction onClick={handleActionClick}>
+          <AlertDialogAction
+            className={'cursor-pointer'}
+            onClick={handleActionClick}
+          >
             확인
           </AlertDialogAction>
         </AlertDialogFooter>

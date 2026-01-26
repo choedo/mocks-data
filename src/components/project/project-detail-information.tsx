@@ -101,7 +101,9 @@ export default function ProjectDetailInformation({ projectId }: Props) {
                 width={24}
                 height={24}
               />
-              <h1 className={'text-2xl'}>{projectData.project_name}</h1>
+              <h1 className={'text-2xl font-semibold'}>
+                {projectData.project_name}
+              </h1>
             </div>
           )}
         </React.Fragment>

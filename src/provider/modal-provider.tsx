@@ -1,6 +1,7 @@
 import AlertModal from '@/components/modal/alert-modal';
 import ProjectEditorModal from '@/components/modal/project-editor-modal';
 import SignUpModal from '@/components/modal/sign-up-modal';
+import TableEditorModal from '@/components/modal/table-editor-modal';
 import React, { type ReactNode } from 'react';
 import { createPortal } from 'react-dom';
 
@@ -16,8 +17,9 @@ export default function ModalProvider({ children }: Props) {
           <AlertModal />
           <SignUpModal />
           <ProjectEditorModal />
+          <TableEditorModal />
         </React.Fragment>,
-        document.getElementById('modal-root')!
+        document.getElementById('modal-root')!,
       )}
       {children}
     </React.Fragment>

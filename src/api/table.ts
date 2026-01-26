@@ -1,4 +1,5 @@
 import supabase from '@/lib/supabase';
+import type { TableAndColumn } from '@/types/data';
 
 export async function fetchTables(projectId: number) {
   const { data, error } = await supabase
@@ -7,7 +8,7 @@ export async function fetchTables(projectId: number) {
     .eq('project_id', projectId);
 
   if (error) throw error;
-  return data;
+  return data as TableAndColumn[];
 }
 
 export async function createTable({
