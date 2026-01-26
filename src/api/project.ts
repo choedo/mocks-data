@@ -11,6 +11,17 @@ export async function fetchProjects(userId: string) {
   return data;
 }
 
+export async function fetchProjectById(projectId: number) {
+  const { data, error } = await supabase
+    .from('project')
+    .select('*')
+    .eq('project_id', projectId)
+    .single();
+
+  if (error) throw error;
+  return data;
+}
+
 export async function duplicateCheckProjectName({
   userId,
   project_name,
@@ -53,7 +64,7 @@ export async function createProject({
 export async function updateProject(
   project: Partial<
     Pick<ProjectEntity, 'project_name' | 'project_description' | 'is_bookmark'>
-  > & { project_id: number }
+  > & { project_id: number },
 ) {
   const updateDate = new Date();
 

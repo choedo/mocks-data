@@ -16,4 +16,9 @@ export const QUERY_KEYS = {
       project_name: string;
     }) => ['project', 'duplicate', userId, project_name],
   },
+  table: {
+    all: ['table'],
+    list: (projectId: number) => ['table', 'list', projectId],
+    byId: (tableId: number) => ['table', 'byId', tableId],
+  },
 };
