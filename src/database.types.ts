@@ -16,32 +16,29 @@ export type Database = {
     Tables: {
       column: {
         Row: {
-          column_description: string | null
+          column_id: number
           column_name: string
           column_type: string
           column_values: Json
           created_at: string
-          id: number
           table_id: number
           updated_at: string
         }
         Insert: {
-          column_description?: string | null
+          column_id?: number
           column_name: string
           column_type: string
           column_values: Json
           created_at?: string
-          id?: number
           table_id: number
           updated_at?: string
         }
         Update: {
-          column_description?: string | null
+          column_id?: number
           column_name?: string
           column_type?: string
           column_values?: Json
           created_at?: string
-          id?: number
           table_id?: number
           updated_at?: string
         }

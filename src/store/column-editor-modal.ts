@@ -1,23 +1,25 @@
+import type { ColumnOptions, ColumnTypes } from '@/types/data';
 import { create } from 'zustand';
 import { devtools, combine } from 'zustand/middleware';
 
 type CreateMode = {
   isOpen: true;
   mode: 'CREATE';
-  projectId: number;
+  tableId: number;
 };
 
 type EditMode = {
   isOpen: true;
   mode: 'EDIT';
-  tableId: number;
+  columnId: number;
   title: string;
+  type: ColumnTypes;
+  options: ColumnOptions;
+  tableId: number;
 };
 
 type OpenState = CreateMode | EditMode;
-type CloseState = {
-  isOpen: false;
-};
+type CloseState = { isOpen: false };
 
 type State = OpenState | CloseState;
 
@@ -25,36 +27,36 @@ const initialState = {
   isOpen: false,
 } as State;
 
-const useTableEditorModalStore = create(
+const useColumnEditorModalStore = create(
   devtools(
     combine(initialState, (set) => ({
       actions: {
-        openCreateMode: (projectId: number) =>
-          set({ isOpen: true, mode: 'CREATE', projectId }),
+        openCreateMode: (tableId: number) =>
+          set({ isOpen: true, mode: 'CREATE', tableId }),
         openEditMode: (param: Omit<EditMode, 'isOpen' | 'mode'>) =>
           set({ isOpen: true, mode: 'EDIT', ...param }),
         close: () => set({ isOpen: false }),
       },
     })),
-    { name: 'tableEditorModalStore' },
+    { name: 'columnEditorModalStore' },
   ),
 );
 
-export const useOpenCreateTableModal = () => {
-  const openCreateMode = useTableEditorModalStore(
+export const useOpenCreateColumnModal = () => {
+  const openCreateMode = useColumnEditorModalStore(
     (store) => store.actions.openCreateMode,
   );
   return openCreateMode;
 };
 
-export const useOpenEditTableModal = () => {
-  const openEditMode = useTableEditorModalStore(
+export const useOpenEditColumnModal = () => {
+  const openEditMode = useColumnEditorModalStore(
     (store) => store.actions.openEditMode,
   );
   return openEditMode;
 };
 
-export const useTableEditorModal = () => {
-  const store = useTableEditorModalStore();
+export const useColumnEditorModal = () => {
+  const store = useColumnEditorModalStore();
   return store as typeof store & State;
 };

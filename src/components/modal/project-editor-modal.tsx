@@ -37,7 +37,7 @@ export default function ProjectEditorModal() {
 
   const { isLoading: isDuplicateCheckLoading, refetch: duplicateCheckRefetch } =
     useDuplicateCheckProjectName({
-      userId: session!.user.id,
+      userId: session?.user.id || '',
       project_name: title,
     });
 

@@ -45,13 +45,13 @@ export default function TableEditorModal() {
       return;
     }
 
-    if (tableEditModal.type === 'CREATE')
+    if (tableEditModal.mode === 'CREATE')
       createTable({ table_name: title, project_id: tableEditModal.projectId });
     else updateTable({ table_id: tableEditModal.tableId, table_name: title });
   };
 
   React.useEffect(() => {
-    if (tableEditModal.isOpen && tableEditModal.type === 'EDIT') {
+    if (tableEditModal.isOpen && tableEditModal.mode === 'EDIT') {
       setTitle(tableEditModal.title);
     }
 
@@ -71,7 +71,7 @@ export default function TableEditorModal() {
     >
       <DialogContent>
         <DialogTitle>
-          {tableEditModal.type === 'CREATE'
+          {tableEditModal.mode === 'CREATE'
             ? 'Create a New Table'
             : 'Modifying the Table'}
         </DialogTitle>
@@ -82,7 +82,11 @@ export default function TableEditorModal() {
             id={'title'}
             value={title}
             onChange={(e) => setTitle(e.target.value)}
-            placeholder={'Please enter a new table name'}
+            placeholder={
+              tableEditModal.mode === 'CREATE'
+                ? 'Please enter a new table name'
+                : tableEditModal.title
+            }
             disabled={isPending}
           />
         </div>
