@@ -79,7 +79,12 @@ export default function ColumnEditorModal() {
     if (!columnEditModal.isOpen) return;
 
     if (title.trim() === '') {
-      toastMessage.info('Please Enter a new column name');
+      toastMessage.info('Please Enter a new column name.');
+      return;
+    }
+
+    if (type === '') {
+      toastMessage.info('Please select a new column type.');
       return;
     }
 
@@ -218,6 +223,7 @@ export default function ColumnEditorModal() {
               type={type}
               onChange={(selected) => setOptions(selected)}
               disabled={isPending}
+              defaultValue={options}
             />
           ) : null}
         </div>

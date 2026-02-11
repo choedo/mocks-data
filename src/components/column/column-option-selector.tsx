@@ -14,7 +14,6 @@ import type {
   BooleanOptions,
   DateOptions,
   EnumOptions,
-  ForeignOptions,
   NumberOptions,
   PrimaryOptions,
 } from '@/types/columns';
@@ -28,6 +27,7 @@ type Props = {
   type: ColumnTypes;
   onChange?: (selected: ColumnOptions) => void;
   disabled?: boolean;
+  defaultValue?: ColumnOptions;
 };
 
 export default function ColumnOptionSelector(props: Props) {
@@ -35,8 +35,6 @@ export default function ColumnOptionSelector(props: Props) {
     switch (type) {
       case 'pk':
         return { type: 'pk', valueType: 'uuid' };
-      case 'fk':
-        return { type: 'fk', valueType: 'uuid', relationship: '1:1' };
       case 'number':
         return { type: 'number' };
       case 'date':
@@ -50,15 +48,24 @@ export default function ColumnOptionSelector(props: Props) {
     }
   };
 
+  const [isRender, setIsRender] = React.useState(false);
   const [selected, setSelected] = React.useState(() =>
-    getDefaultOptions(props.type),
+    props.defaultValue ? props.defaultValue : getDefaultOptions(props.type),
   );
   const [inputValue, setInputValue] = React.useState('');
 
   React.useEffect(() => {
-    const newOptions = getDefaultOptions(props.type);
-    setSelected(newOptions);
-  }, [props.type]);
+    if (props.defaultValue) setSelected(props.defaultValue);
+
+    setIsRender(true);
+  }, [props.defaultValue]);
+
+  React.useEffect(() => {
+    if (isRender && props.type !== selected.type) {
+      const newOptions = getDefaultOptions(props.type);
+      setSelected(newOptions);
+    }
+  }, [props.type, isRender, selected.type]);
 
   React.useEffect(() => {
     props.onChange?.(selected);
@@ -154,50 +161,6 @@ export default function ColumnOptionSelector(props: Props) {
                 />
               ) : null}
             </div>
-          </div>
-        );
-      }
-      case 'fk': {
-        const fkOption = options as ForeignOptions;
-
-        return (
-          <div className={'flex justify-between items-center gap-4'}>
-            <Select
-              disabled={props.disabled}
-              value={fkOption.valueType}
-              onValueChange={(value) =>
-                handleSelectedChange('valueType', value)
-              }
-            >
-              <SelectTrigger className={'flex-1'}>
-                <SelectValue placeholder={'type'} />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectGroup>
-                  <SelectItem value={'uuid'}>uuid</SelectItem>
-                  <SelectItem value={'number'}>number</SelectItem>
-                </SelectGroup>
-              </SelectContent>
-            </Select>
-            <Select
-              disabled={props.disabled}
-              value={fkOption.relationship}
-              onValueChange={(value) =>
-                handleSelectedChange('relationship', value)
-              }
-            >
-              <SelectTrigger className={'flex-1'}>
-                <SelectValue placeholder={'relationship'} />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectGroup>
-                  <SelectItem value={'1:1'}>1:1</SelectItem>
-                  <SelectItem value={'1:N'}>1:N</SelectItem>
-                  <SelectItem value={'N:1'}>N:11</SelectItem>
-                  <SelectItem value={'N:N'}>N:N</SelectItem>
-                </SelectGroup>
-              </SelectContent>
-            </Select>
           </div>
         );
       }
