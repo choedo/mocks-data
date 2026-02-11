@@ -8,10 +8,6 @@ export const COLUMN_TYPES: KeyValues = {
     title: 'Primary Key',
     value: 'pk',
   },
-  fk: {
-    title: 'Foreign Key',
-    value: 'fk',
-  },
   date: {
     title: 'Date',
     value: 'date',
@@ -29,3 +25,6 @@ export const COLUMN_TYPES: KeyValues = {
     value: 'boolean',
   },
 };
+
+export const MINIMUM_DATE = '1926-01-01';
+export const MAXIMUM_DATE = '2099-12-31';

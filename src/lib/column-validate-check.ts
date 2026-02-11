@@ -1,8 +1,8 @@
+import { MAXIMUM_DATE, MINIMUM_DATE } from '@/constants/column';
 import type {
   BooleanOptions,
   DateOptions,
   EnumOptions,
-  ForeignOptions,
   NumberOptions,
   PrimaryOptions,
 } from '@/types/columns';
@@ -23,8 +23,6 @@ export function columnValidateCheck(options: ColumnOptions): ReturnType {
   switch (optionsType) {
     case 'pk':
       return primaryValidateCheck(options);
-    case 'fk':
-      return foreignValidateCheck(options);
     case 'date':
       return dateValidateCheck(options);
     case 'number':
@@ -45,7 +43,7 @@ function primaryValidateCheck(options: PrimaryOptions): ReturnType {
   if (primaryValueType === 'uuid') {
     return { status: 'Success', message: 'Success', data: options };
   } else {
-    const { min, max } = options;
+    const { min } = options;
 
     if (!min) {
       return {
@@ -54,45 +52,8 @@ function primaryValidateCheck(options: PrimaryOptions): ReturnType {
       };
     }
 
-    if (!max) {
-      return {
-        status: 'Fail',
-        message: 'Please enter the maximum value.',
-      };
-    }
-
-    if (min >= max) {
-      return {
-        status: 'Fail',
-        message: 'Minimum value is greater than maximum value.',
-      };
-    }
-
     return { status: 'Success', message: 'Success', data: options };
   }
-}
-
-// Foreign Key Type
-function foreignValidateCheck(options: ForeignOptions): ReturnType {
-  if (!options.valueType) {
-    return {
-      status: 'Fail',
-      message: 'Please select an option type',
-    };
-  }
-
-  if (!options.relationship) {
-    return {
-      status: 'Fail',
-      message: 'Please select an option relationship',
-    };
-  }
-
-  return {
-    status: 'Success',
-    message: 'Success',
-    data: options,
-  };
 }
 
 // Date Type
@@ -114,8 +75,8 @@ function dateValidateCheck(options: DateOptions): ReturnType {
       type,
       valueType,
       format: format || 'YYYY-MM-DD',
-      startDate: startDate || new Date('1926-01-01'),
-      endDate: endDate || new Date(),
+      startDate: startDate || new Date(MINIMUM_DATE),
+      endDate: endDate || new Date(MAXIMUM_DATE),
     },
   };
 }

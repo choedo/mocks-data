@@ -2,7 +2,7 @@ import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useUpdatePassword } from '@/hooks/auth/use-update-password';
-import toastMessage from '@/lib/toastMessage';
+import toastMessage from '@/lib/toast-message';
 import { useNavigate } from 'react-router';
 import { signOut } from '@/api/auth';
 
@@ -14,7 +14,7 @@ export default function ResetPasswordPage() {
     useUpdatePassword({
       onSuccess: () => {
         toastMessage.success(
-          'You password has been changed successfully. Please log in again'
+          'You password has been changed successfully. Please log in again',
         );
         signOut();
         navigate('/sign-in');

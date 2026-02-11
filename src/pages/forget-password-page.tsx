@@ -2,8 +2,8 @@ import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useRequestPasswordResetEmail } from '@/hooks/auth/use-request-password-reset-email';
-import toastMessage from '@/lib/toastMessage';
-import validateCheck from '@/lib/validateCheck';
+import toastMessage from '@/lib/toast-message';
+import validateCheck from '@/lib/validate-check';
 
 export default function ForgetPasswordPage() {
   const [email, setEmail] = React.useState('');

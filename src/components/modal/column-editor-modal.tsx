@@ -16,7 +16,7 @@ import ColumnOptionSelector from '@/components/column/column-option-selector';
 import type { ColumnOptions, ColumnTypes } from '@/types/data';
 import { useCreateColumn } from '@/hooks/column/use-create-column';
 import { useUpdateColumn } from '@/hooks/column/use-update-column';
-import toastMessage from '@/lib/toastMessage';
+import toastMessage from '@/lib/toast-message';
 import { Button } from '@/components/ui/button';
 import { columnValidateCheck } from '@/lib/column-validate-check';
 import {

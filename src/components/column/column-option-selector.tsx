@@ -21,7 +21,8 @@ import type {
 import { DatePicker } from '@/components/ui/date-picker';
 import { Button } from '@/components/ui/button';
 import { PlusSquare, XIcon } from 'lucide-react';
-import toastMessage from '@/lib/toastMessage';
+import toastMessage from '@/lib/toast-message';
+import { inputIntegerValue } from '@/lib/input-value';
 
 type Props = {
   type: ColumnTypes;
@@ -71,10 +72,6 @@ export default function ColumnOptionSelector(props: Props) {
       ...prev,
       [target]: value,
     }));
-  };
-
-  const handleInputNumber = (value: string) => {
-    return value.replace(/[^0-9]/g, '');
   };
 
   const handleAddValues = () => {
@@ -149,25 +146,10 @@ export default function ColumnOptionSelector(props: Props) {
                   onChange={(e) =>
                     handleSelectedChange(
                       'min',
-                      handleInputNumber(e.target.value),
+                      inputIntegerValue(e.target.value),
                     )
                   }
-                  disabled={props.disabled}
-                />
-              ) : null}
-            </div>
-            <div className={'flex-1'}>
-              {pkOption.valueType === 'number' ? (
-                <Input
-                  type={'number'}
-                  value={pkOption.max}
-                  onChange={(e) =>
-                    handleSelectedChange(
-                      'max',
-                      handleInputNumber(e.target.value),
-                    )
-                  }
-                  placeholder={'Max number'}
+                  placeholder={'Minimum Start PK'}
                   disabled={props.disabled}
                 />
               ) : null}
@@ -279,7 +261,7 @@ export default function ColumnOptionSelector(props: Props) {
               type={'number'}
               value={numberOption.min}
               onChange={(e) =>
-                handleSelectedChange('min', handleInputNumber(e.target.value))
+                handleSelectedChange('min', inputIntegerValue(e.target.value))
               }
               placeholder={'min'}
               disabled={props.disabled}
@@ -288,7 +270,7 @@ export default function ColumnOptionSelector(props: Props) {
               type={'number'}
               value={numberOption.max}
               onChange={(e) =>
-                handleSelectedChange('max', handleInputNumber(e.target.value))
+                handleSelectedChange('max', inputIntegerValue(e.target.value))
               }
               placeholder={'max'}
               disabled={props.disabled}
@@ -299,7 +281,7 @@ export default function ColumnOptionSelector(props: Props) {
               onChange={(e) =>
                 handleSelectedChange(
                   'precision',
-                  handleInputNumber(e.target.value),
+                  inputIntegerValue(e.target.value),
                 )
               }
               placeholder={'precision'}

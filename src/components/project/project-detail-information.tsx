@@ -6,7 +6,7 @@ import { SquarePenIcon } from 'lucide-react';
 import { Textarea } from '@/components/ui/textarea';
 import { Input } from '@/components/ui/input';
 import { useUpdateProject } from '@/hooks/project/use-update-project';
-import toastMessage from '@/lib/toastMessage';
+import toastMessage from '@/lib/toast-message';
 import { useDuplicateCheckProjectName } from '@/hooks/project/use-duplicate-check-project-name';
 import { useSession } from '@/store/session';
 import ProjectBookmarkButton from '@/components/project/project-bookmark-button';

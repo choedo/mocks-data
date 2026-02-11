@@ -1,3 +1,4 @@
+import type React from 'react';
 import { create } from 'zustand';
 import { combine, devtools } from 'zustand/middleware';
 
@@ -11,6 +12,9 @@ type OpenState = {
   description: string;
   onPositive?: () => void;
   onNegative?: () => void;
+  cancelText?: string;
+  confirmText?: string;
+  content?: React.ReactNode;
 };
 
 type State = CloseState | OpenState;
@@ -36,8 +40,8 @@ const useAlertModalStore = create(
         },
       },
     })),
-    { name: 'AlertModalStore' }
-  )
+    { name: 'AlertModalStore' },
+  ),
 );
 
 export const useOpenAlertModal = () => {

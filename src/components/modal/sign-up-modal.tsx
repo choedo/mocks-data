@@ -9,8 +9,8 @@ import {
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import toastMessage from '@/lib/toastMessage';
-import validateCheck from '@/lib/validateCheck';
+import toastMessage from '@/lib/toast-message';
+import validateCheck from '@/lib/validate-check';
 import { CircleQuestionMarkIcon } from 'lucide-react';
 import {
   Tooltip,
@@ -91,7 +91,7 @@ export default function SignUpModal() {
 
     if (!validateCheck.password(inputPassword)) {
       toastMessage.info(
-        'Must include uppercase, lowercase, number, and a special character (!, @, #, $, %, ^, (, ), &)'
+        'Must include uppercase, lowercase, number, and a special character (!, @, #, $, %, ^, (, ), &)',
       );
       if (passwordRef.current) passwordRef.current.focus();
       return;

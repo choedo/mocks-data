@@ -12,13 +12,13 @@ import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Button } from '@/components/ui/button';
-import validateCheck from '@/lib/validateCheck';
+import validateCheck from '@/lib/validate-check';
 import { toast } from 'sonner';
 import { Link, useNavigate } from 'react-router';
 import { useSignInWithPassword } from '@/hooks/auth/use-sign-in-with-password';
 import { useHandleSaveEmail, useSaveEmail } from '@/store/session';
 import { useOpenSignUpModal } from '@/store/sign-up-modal';
-import toastMessage from '@/lib/toastMessage';
+import toastMessage from '@/lib/toast-message';
 
 export default function SignInPage() {
   const navigate = useNavigate();

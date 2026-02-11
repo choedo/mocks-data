@@ -56,12 +56,6 @@ export default function TableList({ projectId }: Props) {
             ) : (
               tableData.map((table) => (
                 <TableListItem key={`table-${table.table_id}`} {...table} />
-                // <div
-
-                //   className={'border rounded-sm py-6 px-4 cursor-pointer'}
-                // >
-                //   {table.table_name}
-                // </div>
               ))
             )}
           </React.Fragment>

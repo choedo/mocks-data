@@ -5,7 +5,7 @@ import { useTableEditorModal } from '@/store/table-editor-modal';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import toastMessage from '@/lib/toastMessage';
+import toastMessage from '@/lib/toast-message';
 import { useUpdateTable } from '@/hooks/table/use-update-table';
 
 export default function TableEditorModal() {

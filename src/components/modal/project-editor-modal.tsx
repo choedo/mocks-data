@@ -8,7 +8,7 @@ import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
-import toastMessage from '@/lib/toastMessage';
+import toastMessage from '@/lib/toast-message';
 import { useDuplicateCheckProjectName } from '@/hooks/project/use-duplicate-check-project-name';
 
 export default function ProjectEditorModal() {
