@@ -22,6 +22,9 @@ import { Button } from '@/components/ui/button';
 import { PlusSquare, XIcon } from 'lucide-react';
 import toastMessage from '@/lib/toast-message';
 import { inputIntegerValue } from '@/lib/input-value';
+import { useLanguage } from '@/store/translation';
+import { AlertMessages } from '@/languages/alert-messages';
+import { ContentMessages } from '@/languages/content-messages';
 
 type Props = {
   type: ColumnTypes;
@@ -31,6 +34,7 @@ type Props = {
 };
 
 export default function ColumnOptionSelector(props: Props) {
+  const language = useLanguage();
   const getDefaultOptions = (type: ColumnTypes): ColumnOptions => {
     switch (type) {
       case 'pk':
@@ -85,14 +89,14 @@ export default function ColumnOptionSelector(props: Props) {
     if (selected.type !== 'enum') return;
 
     if (inputValue.trim() === '') {
-      toastMessage.info('Please enter a value.');
+      toastMessage.info(AlertMessages.REQUIRED_ENUM_OPTION_VALUE[language]);
       return;
     }
 
     const prevValues = selected.values;
 
     if (prevValues.includes(inputValue)) {
-      toastMessage.info('Duplicate value exists.');
+      toastMessage.info(AlertMessages.DUPLICATE_ENUM_OPTION_VALUE[language]);
       return;
     }
 
@@ -136,7 +140,7 @@ export default function ColumnOptionSelector(props: Props) {
               }
             >
               <SelectTrigger className={'flex-1'}>
-                <SelectValue placeholder={'type'} />
+                <SelectValue placeholder={ContentMessages.TYPE[language]} />
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
@@ -156,7 +160,11 @@ export default function ColumnOptionSelector(props: Props) {
                       inputIntegerValue(e.target.value),
                     )
                   }
-                  placeholder={'Minimum Start PK'}
+                  placeholder={
+                    ContentMessages.INPUT_MINIMUM_OPTION_VALUE_PLACEHOLDER[
+                      language
+                    ]
+                  }
                   disabled={props.disabled}
                 />
               ) : null}
@@ -177,7 +185,7 @@ export default function ColumnOptionSelector(props: Props) {
                 }
               >
                 <SelectTrigger className={'w-full'}>
-                  <SelectValue placeholder={'type'} />
+                  <SelectValue placeholder={ContentMessages.TYPE[language]} />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectGroup>
@@ -190,7 +198,7 @@ export default function ColumnOptionSelector(props: Props) {
                 <Input
                   className={'w-full'}
                   value={dateOption.format}
-                  placeholder={'format'}
+                  placeholder={ContentMessages.FORMAT_DATE[language]}
                   onChange={(e) =>
                     handleSelectedChange('format', e.target.value)
                   }
@@ -201,13 +209,17 @@ export default function ColumnOptionSelector(props: Props) {
             <div className={'flex-1 flex items-center gap-2'}>
               <DatePicker
                 className={'flex-1 w-full'}
-                placeholder={'Pick a minimum date'}
+                placeholder={
+                  ContentMessages.PICK_MINIMUM_DATE_PLACEHOLDER[language]
+                }
                 onChange={(date) => handleSelectedChange('startDate', date)}
                 disabled={props.disabled}
               />
               <DatePicker
                 className={'flex-1 w-full'}
-                placeholder={'Pick a maximum date'}
+                placeholder={
+                  ContentMessages.PICK_MAXIMUM_DATE_PLACEHOLDER[language]
+                }
                 onChange={(date) => handleSelectedChange('endDate', date)}
                 disabled={props.disabled}
               />
@@ -226,7 +238,9 @@ export default function ColumnOptionSelector(props: Props) {
               onChange={(e) =>
                 handleSelectedChange('min', inputIntegerValue(e.target.value))
               }
-              placeholder={'min'}
+              placeholder={
+                ContentMessages.INPUT_MINIMUM_OPTION_VALUE_PLACEHOLDER[language]
+              }
               disabled={props.disabled}
             />
             <Input
@@ -235,7 +249,9 @@ export default function ColumnOptionSelector(props: Props) {
               onChange={(e) =>
                 handleSelectedChange('max', inputIntegerValue(e.target.value))
               }
-              placeholder={'max'}
+              placeholder={
+                ContentMessages.INPUT_MAXIMUM_OPTION_VALUE_PLACEHOLDER[language]
+              }
               disabled={props.disabled}
             />
             <Input
@@ -247,7 +263,11 @@ export default function ColumnOptionSelector(props: Props) {
                   inputIntegerValue(e.target.value),
                 )
               }
-              placeholder={'precision'}
+              placeholder={
+                ContentMessages.INPUT_PRECISION_OPTION_VALUE_PLACEHOLDER[
+                  language
+                ]
+              }
               disabled={props.disabled}
             />
           </div>
@@ -262,7 +282,7 @@ export default function ColumnOptionSelector(props: Props) {
               <Input
                 value={inputValue}
                 onChange={(e) => setInputValue(e.target.value)}
-                placeholder={'Please enter a value.'}
+                placeholder={ContentMessages.INPUT_VALUE_PLACEHOLDER[language]}
                 onKeyDown={handlePressEnter}
               />
               <Button size={'icon'} onClick={handleAddValues}>
@@ -324,7 +344,7 @@ export default function ColumnOptionSelector(props: Props) {
 
   return (
     <div className={'flex flex-col gap-2'}>
-      <Label>Options</Label>
+      <Label>{ContentMessages.OPTIONS_LABEL[language]}</Label>
       {optionsRendering(selected)}
     </div>
   );

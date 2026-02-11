@@ -1,4 +1,5 @@
 import { MAXIMUM_DATE, MINIMUM_DATE } from '@/constants/column';
+import { AlertMessages } from '@/languages/alert-messages';
 import type {
   BooleanOptions,
   DateOptions,
@@ -7,13 +8,15 @@ import type {
   PrimaryOptions,
 } from '@/types/columns';
 import type { ColumnOptions } from '@/types/data';
+import type { Language } from '@/types/default';
 import dayjs from 'dayjs';
 
-type FailReturnType = { status: 'Fail'; message: string };
+type MessageType = Record<Language, string>;
+type FailReturnType = { status: 'Fail'; message: MessageType };
 type SuccessReturnType = {
   status: 'Success';
   data: ColumnOptions;
-  message: string;
+  message: MessageType;
 };
 type ReturnType = FailReturnType | SuccessReturnType;
 
@@ -32,7 +35,7 @@ export function columnValidateCheck(options: ColumnOptions): ReturnType {
     case 'boolean':
       return booleanValidateCheck(options);
     default:
-      return { status: 'Fail', message: 'Undefined Option Type' };
+      return { status: 'Fail', message: AlertMessages.DEFAULT_FAIL_MESSAGE };
   }
 }
 
@@ -41,18 +44,18 @@ function primaryValidateCheck(options: PrimaryOptions): ReturnType {
   const primaryValueType = options.valueType;
 
   if (primaryValueType === 'uuid') {
-    return { status: 'Success', message: 'Success', data: options };
+    return { status: 'Success', message: AlertMessages.SUCCESS, data: options };
   } else {
     const { min } = options;
 
     if (!min) {
       return {
         status: 'Fail',
-        message: 'Please enter the minimum value.',
+        message: AlertMessages.INPUT_MINIMUM_VALUE,
       };
     }
 
-    return { status: 'Success', message: 'Success', data: options };
+    return { status: 'Success', message: AlertMessages.SUCCESS, data: options };
   }
 }
 
@@ -63,14 +66,14 @@ function dateValidateCheck(options: DateOptions): ReturnType {
     if (!dayjs(startDate).isBefore(endDate)) {
       return {
         status: 'Fail',
-        message: 'Minimum date is greater than maximum date.',
+        message: AlertMessages.MINIMUM_DATE_GREATER_MAXIMUM_DATE,
       };
     }
   }
 
   return {
     status: 'Success',
-    message: 'Success',
+    message: AlertMessages.SUCCESS,
     data: {
       type,
       valueType,
@@ -89,14 +92,14 @@ function numberValidateCheck(options: NumberOptions): ReturnType {
     if (min >= max) {
       return {
         status: 'Fail',
-        message: 'Minimum value is greater than maximum value.',
+        message: AlertMessages.MINIMUM_GREATER_MAXIMUM,
       };
     }
   }
 
   return {
     status: 'Success',
-    message: 'Success',
+    message: AlertMessages.SUCCESS,
     data: {
       type,
       min: min || 0,
@@ -111,13 +114,13 @@ function enumValidateCheck(options: EnumOptions): ReturnType {
   if (options.values.length === 0) {
     return {
       status: 'Fail',
-      message: 'One or more values are required.',
+      message: AlertMessages.REQUIRED_ONE_OPTION_VALUE,
     };
   }
 
   return {
     status: 'Success',
-    message: 'Success',
+    message: AlertMessages.SUCCESS,
     data: options,
   };
 }
@@ -127,13 +130,13 @@ function booleanValidateCheck(options: BooleanOptions): ReturnType {
   if (!options.valueType) {
     return {
       status: 'Fail',
-      message: 'Please select an option type',
+      message: AlertMessages.SELECT_COLUMN_OPTION_TYPE,
     };
   }
 
   return {
     status: 'Success',
-    message: 'Success',
+    message: AlertMessages.SUCCESS,
     data: options,
   };
 }

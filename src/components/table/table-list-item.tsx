@@ -25,12 +25,15 @@ import {
 } from '@/store/column-editor-modal';
 import { Kbd } from '@/components/ui/kbd';
 import { COLUMN_TYPES } from '@/constants/column';
-
 import ConfirmProduceMockDataModal from '@/components/table/confirm-produce-mock-data-modal';
+import { useLanguage } from '@/store/translation';
+import { ContentMessages } from '@/languages/content-messages';
+import { AlertMessages } from '@/languages/alert-messages';
 
 type Props = {} & TableAndColumn;
 
 export default function TableListItem(props: Props) {
+  const language = useLanguage();
   const openEditTableMode = useOpenEditTableModal();
   const open = useOpenAlertModal();
   const openCreateColumnMode = useOpenCreateColumnModal();
@@ -39,10 +42,11 @@ export default function TableListItem(props: Props) {
   const { mutate: deleteTable, isPending: isDeleteTablePending } =
     useDeleteTable({
       onSuccess: () => {
-        toastMessage.success('Successfully!');
+        toastMessage.success(AlertMessages.SUCCESS_PROJECT_DELETED[language]);
       },
       onError: (error) => {
-        const message = error.message || 'Error';
+        console.error(error);
+        const message = AlertMessages.FAIL_PROJECT_DELETED[language];
         toastMessage.error(message);
       },
     });
@@ -53,9 +57,8 @@ export default function TableListItem(props: Props) {
     e.stopPropagation();
 
     open({
-      title: 'Warning',
-      description:
-        'Are you sure you want to delete it?\nIt cannot be recovered after deleting it.',
+      title: AlertMessages.WARNING_TITLE[language],
+      description: AlertMessages.CONFIRM_DELETE_DESCRIPTION[language],
       onPositive: () => deleteTable(props.table_id),
     });
   };
@@ -167,7 +170,7 @@ export default function TableListItem(props: Props) {
                   onClick={() => openCreateColumnMode(props.table_id)}
                 >
                   <PlusCircleIcon />
-                  Add Column
+                  {ContentMessages.ADD_COLUMN_BUTTON[language]}
                 </Button>
               </div>
             )}

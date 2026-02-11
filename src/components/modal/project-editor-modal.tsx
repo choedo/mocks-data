@@ -10,9 +10,13 @@ import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import toastMessage from '@/lib/toast-message';
 import { useDuplicateCheckProjectName } from '@/hooks/project/use-duplicate-check-project-name';
+import { useLanguage } from '@/store/translation';
+import { AlertMessages } from '@/languages/alert-messages';
+import { ContentMessages } from '@/languages/content-messages';
 
 export default function ProjectEditorModal() {
   const session = useSession();
+  const language = useLanguage();
 
   const store = useProjectEditorModal();
   const {
@@ -26,11 +30,12 @@ export default function ProjectEditorModal() {
   const { mutate: createProject, isPending: isCreateProjectPending } =
     useCreateProject({
       onSuccess: () => {
-        toastMessage.success('A new project has been created successfully');
+        toastMessage.success(AlertMessages.CREATE_PROJECT_SUCCESS[language]);
         close();
       },
       onError: (error) => {
-        const message = error.message || 'Error';
+        console.error(error);
+        const message = AlertMessages.CREATE_PROJECT_FAIL[language];
         toastMessage.error(message);
       },
     });
@@ -50,7 +55,7 @@ export default function ProjectEditorModal() {
 
   const handleSubmitClick = async () => {
     if (title.trim() === '') {
-      toastMessage.info('Please enter the name of your new project.');
+      toastMessage.info(AlertMessages.REQUIRED_PROJECT_NAME_INPUT[language]);
       titleRef.current?.focus();
       return;
     }
@@ -58,7 +63,7 @@ export default function ProjectEditorModal() {
     // 중복 체크
     const res = await duplicateCheckRefetch();
     if (!res.data) {
-      toastMessage.info('Duplicate project exists.');
+      toastMessage.info(AlertMessages.DUPLICATE_PROJECT_NAME[language]);
       titleRef.current?.focus();
       return;
     }
@@ -80,22 +85,28 @@ export default function ProjectEditorModal() {
   return (
     <Dialog open={isOpen} onOpenChange={close}>
       <DialogContent>
-        <DialogTitle>Create a New Project</DialogTitle>
+        <DialogTitle>
+          {ContentMessages.PROJECT_CREATE_TITLE[language]}
+        </DialogTitle>
         <div className={'flex flex-col gap-4'}>
           <div className={'flex flex-col gap-2'}>
-            <Label htmlFor={'title'}>Project Name</Label>
+            <Label htmlFor={'title'}>
+              {ContentMessages.PROJECT_NAME_LABEL[language]}
+            </Label>
             <Input
               ref={titleRef}
               id={'title'}
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              placeholder={'Please enter a new project name'}
+              placeholder={ContentMessages.PROJECT_NAME_PLACEHOLDER[language]}
               disabled={isPending}
               maxLength={50}
             />
           </div>
           <div className={'flex flex-col gap-2'}>
-            <Label htmlFor={'description'}>Project Description</Label>
+            <Label htmlFor={'description'}>
+              {ContentMessages.PROJECT_DESCRIPTION_LABEL[language]}
+            </Label>
             <Textarea
               id={'description'}
               value={description}
@@ -103,6 +114,9 @@ export default function ProjectEditorModal() {
               disabled={isPending}
               maxLength={255}
               className={'min-h-30'}
+              placeholder={
+                ContentMessages.PROJECT_DESCRIPTION_PLACEHOLDER[language]
+              }
             />
           </div>
           <Button
@@ -110,7 +124,7 @@ export default function ProjectEditorModal() {
             className={'cursor-pointer'}
             disabled={isPending}
           >
-            Submit
+            {ContentMessages.SUBMIT_BUTTON[language]}
           </Button>
         </div>
       </DialogContent>

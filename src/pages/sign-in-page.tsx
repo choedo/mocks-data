@@ -13,15 +13,18 @@ import { Input } from '@/components/ui/input';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Button } from '@/components/ui/button';
 import validateCheck from '@/lib/validate-check';
-import { toast } from 'sonner';
 import { Link, useNavigate } from 'react-router';
 import { useSignInWithPassword } from '@/hooks/auth/use-sign-in-with-password';
 import { useHandleSaveEmail, useSaveEmail } from '@/store/session';
 import { useOpenSignUpModal } from '@/store/sign-up-modal';
 import toastMessage from '@/lib/toast-message';
+import { AlertMessages } from '@/languages/alert-messages';
+import { useLanguage } from '@/store/translation';
+import { ContentMessages } from '@/languages/content-messages';
 
 export default function SignInPage() {
   const navigate = useNavigate();
+  const languages = useLanguage();
 
   const emailRef = React.useRef<HTMLInputElement>(null);
   const passwordRef = React.useRef<HTMLInputElement>(null);
@@ -37,8 +40,9 @@ export default function SignInPage() {
   const { mutate: signInWithPassword, isPending: isSignInWithPasswordPending } =
     useSignInWithPassword({
       onError: (error) => {
-        const errorMessage = error.message || 'Error';
-        toastMessage.error(errorMessage);
+        console.error(error);
+        const message = AlertMessages.LOGIN_FAILED[languages];
+        toastMessage.error(message);
 
         setPassword('');
       },
@@ -63,9 +67,7 @@ export default function SignInPage() {
     // 이메일
     const inputEmail = email.trim();
     if (inputEmail === '') {
-      toast.info('Please enter your email', {
-        position: 'top-center',
-      });
+      toastMessage.info(AlertMessages.REQUIRED_EMAIL_INPUT[languages]);
 
       if (emailRef.current) emailRef.current.focus();
 
@@ -73,9 +75,7 @@ export default function SignInPage() {
     }
 
     if (!validateCheck.email(inputEmail)) {
-      toast.info('Please check your email', {
-        position: 'top-center',
-      });
+      toastMessage.info(AlertMessages.NOT_EMAIL_FORMAT[languages]);
 
       if (emailRef.current) emailRef.current.focus();
 
@@ -85,9 +85,7 @@ export default function SignInPage() {
     // 비밀번호
     const inputPassword = password.trim();
     if (inputPassword === '') {
-      toast.info('Please enter your password', {
-        position: 'top-center',
-      });
+      toastMessage.info(AlertMessages.REQUIRED_PASSWORD_INPUT[languages]);
 
       if (passwordRef.current) passwordRef.current.focus();
 
@@ -120,9 +118,9 @@ export default function SignInPage() {
   return (
     <Card className={`w-full max-w-sm`}>
       <CardHeader>
-        <CardTitle>Login to your account</CardTitle>
+        <CardTitle>{ContentMessages.LOGIN_TITLE[languages]}</CardTitle>
         <CardDescription>
-          Enter your email below to login to your account
+          {ContentMessages.LOGIN_DESCRIPTION[languages]}
         </CardDescription>
         <CardAction>
           <Button
@@ -130,20 +128,22 @@ export default function SignInPage() {
             className={`hover:underline cursor-pointer`}
             onClick={handleSignUpClick}
           >
-            Sign Up
+            {ContentMessages.SIGN_UP_BUTTON[languages]}
           </Button>
         </CardAction>
       </CardHeader>
       <CardContent className={`flex flex-col gap-4`}>
         <div className={`flex flex-col gap-2`}>
           <div>
-            <Label htmlFor={'email'}>Email</Label>
+            <Label htmlFor={'email'}>
+              {ContentMessages.EMAIL_LABEL[languages]}
+            </Label>
           </div>
           <Input
             ref={emailRef}
             id={'email'}
             type={`email`}
-            placeholder={`Enter your email`}
+            placeholder={ContentMessages.EMAIL_PLACEHOLDER[languages]}
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             onKeyDown={handlePressEnter}
@@ -152,13 +152,15 @@ export default function SignInPage() {
         </div>
         <div className={`flex flex-col gap-2`}>
           <div>
-            <Label htmlFor={'password'}>Password</Label>
+            <Label htmlFor={'password'}>
+              {ContentMessages.PASSWORD_LABEL[languages]}
+            </Label>
           </div>
           <Input
             ref={passwordRef}
             id={'password'}
             type={`password`}
-            placeholder={`Enter your password`}
+            placeholder={ContentMessages.PASSWORD_PLACEHOLDER[languages]}
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             onKeyDown={handlePressEnter}
@@ -172,13 +174,15 @@ export default function SignInPage() {
             onCheckedChange={(e) => setChecked(e as boolean)}
             disabled={isPending}
           />
-          <Label htmlFor={`checkbox`}>Remember this email</Label>
+          <Label htmlFor={`checkbox`}>
+            {ContentMessages.SAVE_EMAIL_CHECKBOX[languages]}
+          </Label>
         </div>
         <Link
           to={`/forget-password`}
           className={`text-muted-foreground hover:underline text-sm`}
         >
-          Did you forget your password?
+          {ContentMessages.ANSER_FORGOT_PASSWORD[languages]}
         </Link>
       </CardContent>
       <CardFooter>
@@ -187,7 +191,7 @@ export default function SignInPage() {
           onClick={handleLoginClick}
           disabled={isPending}
         >
-          Login
+          {ContentMessages.LOGIN_BUTTON[languages]}
         </Button>
       </CardFooter>
     </Card>

@@ -5,7 +5,7 @@ import {
   PopoverTrigger,
 } from '@/components/ui/popover';
 import { LANGUAGES } from '@/constants/language';
-import { useTranslation } from '@/store/traslation';
+import { useTranslation } from '@/store/translation';
 import type { Language } from '@/types/default';
 import { GlobeIcon } from 'lucide-react';
 

@@ -25,44 +25,51 @@ import {
 } from '@/api/column';
 import { useDeleteColumn } from '@/hooks/column/use-delete-column';
 import { useOpenAlertModal } from '@/store/alert-modal';
+import { useLanguage } from '@/store/translation';
+import { AlertMessages } from '@/languages/alert-messages';
+import { ContentMessages } from '@/languages/content-messages';
 
 export default function ColumnEditorModal() {
+  const language = useLanguage();
   const columnEditModal = useColumnEditorModal();
   const openAlert = useOpenAlertModal();
 
   const { mutate: createColumn, isPending: isCreateColumnPending } =
     useCreateColumn({
       onSuccess: () => {
-        toastMessage.success('Successfully');
+        toastMessage.success(AlertMessages.SUCCESS_COLUMN_CREATED[language]);
 
         columnEditModal.actions.close();
       },
       onError: (error) => {
-        const message = error.message || 'Error';
+        console.error(error);
+        const message = AlertMessages.FAIL_COLUMN_CREATED[language];
         toastMessage.error(message);
       },
     });
   const { mutate: updateColumn, isPending: isUpdateColumnPending } =
     useUpdateColumn({
       onSuccess: () => {
-        toastMessage.success('Successfully');
+        toastMessage.success(AlertMessages.SUCCESS_COLUMN_UPDATED[language]);
 
         columnEditModal.actions.close();
       },
       onError: (error) => {
-        const message = error.message || 'Error';
+        console.error(error);
+        const message = AlertMessages.FAIL_COLUMN_UPDATED[language];
         toastMessage.error(message);
       },
     });
   const { mutate: deleteColumn, isPending: isDeleteColumnPending } =
     useDeleteColumn({
       onSuccess: () => {
-        toastMessage.success('Successfully');
+        toastMessage.success(AlertMessages.SUCCESS_COLUMN_DELETED[language]);
 
         columnEditModal.actions.close();
       },
       onError: (error) => {
-        const message = error.message || 'Error';
+        console.error(error);
+        const message = AlertMessages.FAIL_COLUMN_DELETED[language];
         toastMessage.error(message);
       },
     });
@@ -79,12 +86,12 @@ export default function ColumnEditorModal() {
     if (!columnEditModal.isOpen) return;
 
     if (title.trim() === '') {
-      toastMessage.info('Please Enter a new column name.');
+      toastMessage.info(AlertMessages.REQUIRED_COLUMN_NAME_INPUT[language]);
       return;
     }
 
     if (type === '') {
-      toastMessage.info('Please select a new column type.');
+      toastMessage.info(AlertMessages.REQUIRED_COLUMN_TYPE_INPUT[language]);
       return;
     }
 
@@ -95,7 +102,7 @@ export default function ColumnEditorModal() {
       );
 
       if (!duplicatePrimaryKeyCheck) {
-        toastMessage.info('Primary key must be unique.');
+        toastMessage.info(AlertMessages.UNIQUE_PRIMARY_KEY_COLUMN[language]);
         return;
       }
     }
@@ -107,13 +114,13 @@ export default function ColumnEditorModal() {
     });
 
     if (!duplicateNameCheck) {
-      toastMessage.info('Column name must be unique.');
+      toastMessage.info(AlertMessages.UNIQUE_COLUMN_NAME[language]);
       return;
     }
 
     const validateCheck = columnValidateCheck(options);
     if (validateCheck.status === 'Fail') {
-      toastMessage.info(validateCheck.message);
+      toastMessage.info(validateCheck.message[language]);
       return;
     } else {
       if (columnEditModal.mode === 'CREATE') {
@@ -138,9 +145,8 @@ export default function ColumnEditorModal() {
     if (!columnEditModal.isOpen || columnEditModal.mode === 'CREATE') return;
 
     openAlert({
-      title: 'Warning',
-      description:
-        'Are you sure you want to delete it?\nIt cannot be recovered after deleting it.',
+      title: AlertMessages.WARNING_TITLE[language],
+      description: AlertMessages.CONFIRM_DELETE_DESCRIPTION[language],
       onPositive: () => deleteColumn(columnEditModal.columnId),
     });
   };
@@ -175,12 +181,14 @@ export default function ColumnEditorModal() {
       <DialogContent>
         <DialogTitle>
           {columnEditModal.mode === 'CREATE'
-            ? 'Create a New Column'
-            : 'Modifying the Column'}
+            ? ContentMessages.CREATE_COLUMN_TITLE[language]
+            : ContentMessages.EDIT_COLUMN_TITLE[language]}
         </DialogTitle>
         <div className={'flex flex-col gap-4'}>
           <div className={'flex flex-col gap-2'}>
-            <Label htmlFor={'title'}>Column Name</Label>
+            <Label htmlFor={'title'}>
+              {ContentMessages.COLUMN_NAME_LABEL[language]}
+            </Label>
             <Input
               ref={titleRef}
               id={'title'}
@@ -188,21 +196,27 @@ export default function ColumnEditorModal() {
               onChange={(e) => setTitle(e.target.value)}
               placeholder={
                 columnEditModal.mode === 'CREATE'
-                  ? 'Please enter a new column name'
+                  ? ContentMessages.COLUMN_NAME_PLACEHOLDER[language]
                   : columnEditModal.title
               }
               disabled={isPending}
             />
           </div>
           <div className={'flex flex-col gap-2'}>
-            <Label htmlFor={'description'}>Column Type</Label>
+            <Label htmlFor={'description'}>
+              {ContentMessages.COLUMN_TYPE_LABEL[language]}
+            </Label>
             <Select
               disabled={isPending}
               value={type}
               onValueChange={(value: ColumnTypes) => setType(value)}
             >
               <SelectTrigger className={'w-full'}>
-                <SelectValue placeholder={'Select a type'} />
+                <SelectValue
+                  placeholder={
+                    ContentMessages.COLUMN_TYPE_PLACEHOLDER[language]
+                  }
+                />
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
@@ -235,7 +249,7 @@ export default function ColumnEditorModal() {
               className={'cursor-pointer'}
               onClick={handleDeleteClick}
             >
-              Delete
+              {ContentMessages.DELETE_BUTTON[language]}
             </Button>
           ) : null}
           <Button
@@ -243,7 +257,7 @@ export default function ColumnEditorModal() {
             className={'cursor-pointer'}
             onClick={handleSubmitClick}
           >
-            Submit
+            {ContentMessages.SUBMIT_BUTTON[language]}
           </Button>
         </div>
       </DialogContent>

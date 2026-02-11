@@ -10,6 +10,9 @@ import toastMessage from '@/lib/toast-message';
 import { useDuplicateCheckProjectName } from '@/hooks/project/use-duplicate-check-project-name';
 import { useSession } from '@/store/session';
 import ProjectBookmarkButton from '@/components/project/project-bookmark-button';
+import { AlertMessages } from '@/languages/alert-messages';
+import { useLanguage } from '@/store/translation';
+import { ContentMessages } from '@/languages/content-messages';
 
 type Props = {
   projectId: number;
@@ -17,6 +20,7 @@ type Props = {
 
 export default function ProjectDetailInformation({ projectId }: Props) {
   const session = useSession();
+  const language = useLanguage();
   const { data: projectData, isLoading: isProjectDataLoading } =
     useProjectByIdData(projectId);
 
@@ -28,11 +32,12 @@ export default function ProjectDetailInformation({ projectId }: Props) {
   const { mutate: updateProject, isPending: isUpdateProjectPending } =
     useUpdateProject({
       onSuccess: () => {
-        toastMessage.success('Successfully changed.');
+        toastMessage.success(AlertMessages.SUCCESS_PROJECT_UPDATED[language]);
         setIsEdit(false);
       },
       onError: (error) => {
-        const message = error.message || 'Error';
+        console.error(error);
+        const message = AlertMessages.FAIL_PROJECT_UPDATED[language];
         toastMessage.error(message);
       },
     });
@@ -45,9 +50,7 @@ export default function ProjectDetailInformation({ projectId }: Props) {
 
   const handleUpdateClick = async () => {
     if (title.trim() === '') {
-      toastMessage.info(
-        'Please enter the name of the project you want to change',
-      );
+      toastMessage.info(AlertMessages.REQUIRED_PROJECT_NAME_INPUT[language]);
       titleRef.current?.focus();
       return;
     }
@@ -55,7 +58,7 @@ export default function ProjectDetailInformation({ projectId }: Props) {
     if (title !== projectData.project_name) {
       const res = await duplicateCheckRefetch();
       if (!res.data) {
-        toastMessage.info('Duplicate project exists.');
+        toastMessage.info(AlertMessages.DUPLICATE_PROJECT_NAME[language]);
         titleRef.current?.focus();
         return;
       }
@@ -148,10 +151,10 @@ export default function ProjectDetailInformation({ projectId }: Props) {
             onClick={() => setIsEdit(false)}
             disabled={isPending}
           >
-            Cancel
+            {ContentMessages.CANCEL_BUTTON[language]}
           </Button>
           <Button onClick={handleUpdateClick} disabled={isPending}>
-            Update
+            {ContentMessages.UPDATE_BUTTON[language]}
           </Button>
         </div>
       ) : null}

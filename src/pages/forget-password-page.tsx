@@ -4,8 +4,12 @@ import { Input } from '@/components/ui/input';
 import { useRequestPasswordResetEmail } from '@/hooks/auth/use-request-password-reset-email';
 import toastMessage from '@/lib/toast-message';
 import validateCheck from '@/lib/validate-check';
+import { useLanguage } from '@/store/translation';
+import { AlertMessages } from '@/languages/alert-messages';
+import { ContentMessages } from '@/languages/content-messages';
 
 export default function ForgetPasswordPage() {
+  const language = useLanguage();
   const [email, setEmail] = React.useState('');
 
   const {
@@ -13,23 +17,24 @@ export default function ForgetPasswordPage() {
     isPending: isRequestPasswordResetEmailPending,
   } = useRequestPasswordResetEmail({
     onSuccess: () => {
-      toastMessage.success('The authentication mail has been sent well.');
+      toastMessage.success(AlertMessages.SUCCESS_EMAIL_SENT[language]);
       setEmail('');
     },
     onError: (error) => {
-      const message = error.message || 'Error';
+      console.error(error);
+      const message = AlertMessages.FAIL_EMAIL_SENT[language];
       toastMessage.error(message);
     },
   });
 
   const handleSendEmailClick = () => {
     if (email.trim() === '') {
-      toastMessage.info('Please enter your email.');
+      toastMessage.info(AlertMessages.REQUIRED_EMAIL_INPUT[language]);
       return;
     }
 
     if (!validateCheck.email(email)) {
-      toastMessage.info('Please check your email');
+      toastMessage.info(AlertMessages.NOT_EMAIL_FORMAT[language]);
       return;
     }
 
@@ -39,9 +44,11 @@ export default function ForgetPasswordPage() {
   return (
     <div className="w-full max-w-sm flex flex-col gap-8">
       <div className="flex flex-col gap-1">
-        <div className="text-xl font-bold">비밀번호를 잊으셨나요?</div>
+        <div className="text-xl font-bold">
+          {ContentMessages.FORGET_PASSWORD_TITLE[language]}
+        </div>
         <div className="text-muted-foreground">
-          이메일로 비밀번호를 재설정 할 수 있는 인증 링크를 보내드립니다.
+          {ContentMessages.FORGET_PASSWORD_DESCRIPTION[language]}
         </div>
       </div>
       <Input
@@ -56,7 +63,7 @@ export default function ForgetPasswordPage() {
         onClick={handleSendEmailClick}
         className="w-full"
       >
-        인증 메일 요청하기
+        {ContentMessages.SEND_AUTH_EMAIL_BUTTON[language]}
       </Button>
     </div>
   );

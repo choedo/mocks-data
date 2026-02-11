@@ -16,6 +16,9 @@ import type { ColumnEntity } from '@/types/data';
 import { SchemaGenerator } from '@/lib/generator';
 
 import { useOpenMockResultModal } from '@/store/mock-result-modal';
+import { useLanguage } from '@/store/translation';
+import { AlertMessages } from '@/languages/alert-messages';
+import { ContentMessages } from '@/languages/content-messages';
 
 type Props = {
   columns: ColumnEntity[];
@@ -23,6 +26,7 @@ type Props = {
 };
 
 export default function ConfirmProduceMockDataModal(props: Props) {
+  const language = useLanguage();
   const openResultModal = useOpenMockResultModal();
 
   const inputRef = React.useRef<HTMLInputElement>(null);
@@ -43,7 +47,9 @@ export default function ConfirmProduceMockDataModal(props: Props) {
     event.stopPropagation();
 
     if (amount.trim() === '') {
-      toastMessage.info('Please enter as many as you want to create.');
+      toastMessage.info(
+        AlertMessages.REQUIRED_INPUT_MOCK_DATA_AMOUNT[language],
+      );
       return;
     }
 
@@ -84,14 +90,16 @@ export default function ConfirmProduceMockDataModal(props: Props) {
           className={'cursor-pointer'}
           onClick={(e) => handleOpenChange(e)}
         >
-          Produce
+          {ContentMessages.PRODUCE_BUTTON[language]}
         </Button>
       </DialogTrigger>
       <DialogContent onClick={(e) => e.stopPropagation()}>
         <DialogHeader>
-          <DialogTitle>Create Mock Data</DialogTitle>
+          <DialogTitle>
+            {ContentMessages.PRODUCE_MOCK_DATA_TITLE[language]}
+          </DialogTitle>
           <DialogDescription>
-            Please enter as many as you want to create.
+            {ContentMessages.PRODUCE_MOCK_DATA_DESCRIPTION[language]}
           </DialogDescription>
         </DialogHeader>
         <div className={'flex items-center gap-2'}>
@@ -100,7 +108,9 @@ export default function ConfirmProduceMockDataModal(props: Props) {
             type={'number'}
             value={amount}
             onChange={(e) => setAmount(inputIntegerValue(e.target.value))}
-            placeholder={'Quantity'}
+            placeholder={
+              ContentMessages.INPUT_MOCK_DATA_AMOUNT_PLACEHOLDER[language]
+            }
             disabled={loading}
             maxLength={3}
           />
@@ -114,10 +124,11 @@ export default function ConfirmProduceMockDataModal(props: Props) {
               setOpen(false);
             }}
           >
-            Cancel
+            {ContentMessages.CANCEL_BUTTON[language]}
           </Button>
           <Button disabled={loading} onClick={(e) => handleProduceClick(e)}>
-            {loading ? <Spinner /> : null} Produce
+            {loading ? <Spinner /> : null}{' '}
+            {ContentMessages.PRODUCE_BUTTON[language]}
           </Button>
         </div>
       </DialogContent>
