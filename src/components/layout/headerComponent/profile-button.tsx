@@ -1,5 +1,4 @@
 import { signOut } from '@/api/auth';
-import defaultAvatar from '@/assets/default-avatar.jpg';
 import { Button } from '@/components/ui/button';
 import {
   Popover,
@@ -9,6 +8,7 @@ import {
 import { useProfileData } from '@/hooks/profile/use-profile-data';
 import { useSession } from '@/store/session';
 import { PopoverClose } from '@radix-ui/react-popover';
+import { UserIcon } from 'lucide-react';
 
 export default function ProfileButton() {
   const session = useSession();
@@ -19,11 +19,18 @@ export default function ProfileButton() {
   return (
     <Popover>
       <PopoverTrigger>
-        <img
-          className="h-6 w-6 cursor-pointer rounded-full object-cover"
-          src={profile?.avatar_url || defaultAvatar}
-          alt={'사용자 프로필'}
-        />
+        {profile.avatar_url ? (
+          <img
+            width={40}
+            height={40}
+            src={profile.avatar_url}
+            className={'rounded-full cursor-pointer object-cover'}
+          />
+        ) : (
+          <div className="hover:bg-muted cursor-pointer rounded-full p-2">
+            <UserIcon />
+          </div>
+        )}
       </PopoverTrigger>
       <PopoverContent className="flex w-40 flex-col p-0">
         <PopoverClose asChild className={'p-2'}>
