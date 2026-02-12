@@ -13,6 +13,7 @@ import ProjectBookmarkButton from '@/components/project/project-bookmark-button'
 import { AlertMessages } from '@/languages/alert-messages';
 import { useLanguage } from '@/store/translation';
 import { ContentMessages } from '@/languages/content-messages';
+import { Card } from '@/components/ui/card';
 
 type Props = {
   projectId: number;
@@ -82,7 +83,9 @@ export default function ProjectDetailInformation({ projectId }: Props) {
   const isBookmark = projectData?.is_bookmark;
 
   return (
-    <div className={'flex flex-col gap-2 border rounded-sm py-6 px-4 relative'}>
+    <Card
+      className={'flex flex-col gap-2 border rounded-sm py-6 px-4 relative'}
+    >
       {isProjectDataLoading ? (
         <Skeleton className={'h-10 w-50'} />
       ) : (
@@ -158,6 +161,6 @@ export default function ProjectDetailInformation({ projectId }: Props) {
           </Button>
         </div>
       ) : null}
-    </div>
+    </Card>
   );
 }
