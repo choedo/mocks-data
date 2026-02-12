@@ -7,8 +7,8 @@ export const AlertMessages: Record<string, Record<Language, string>> = {
     ko: '경고',
   },
   CONFIRM_DELETE_DESCRIPTION: {
-    en: 'Are you sure you want to delete it? It cannot be recovered after deleting it.',
-    ko: '정말 삭제하시겠습니까? 삭제 후에는 복구할 수 없습니다.',
+    en: 'Are you sure you want to delete it?\nIt cannot be recovered after deleting it.',
+    ko: '정말 삭제하시겠습니까?\n삭제 후에는 복구할 수 없습니다.',
   },
   // 인증메일
   SUCCESS_EMAIL_SENT: {
@@ -40,8 +40,8 @@ export const AlertMessages: Record<string, Record<Language, string>> = {
   },
   // 비밀번호 변경
   SUCCESS_PASSWORD_CHANGED: {
-    en: 'Your password has been changed successfully. Please log in again.',
-    ko: '비밀번호가 성공적으로 변경되었습니다. 다시 로그인해주세요.',
+    en: 'Your password has been changed successfully.\nPlease log in again.',
+    ko: '비밀번호가 성공적으로 변경되었습니다.\n다시 로그인해주세요.',
   },
   FAIL_PASSWORD_CHANGED: {
     en: 'Failed to change your password.',
@@ -61,8 +61,8 @@ export const AlertMessages: Record<string, Record<Language, string>> = {
     ko: '프로젝트 이름을 입력해주세요.',
   },
   DUPLICATE_PROJECT_NAME: {
-    en: 'A project with the same name already exists. Please choose a different name.',
-    ko: '동일한 이름의 프로젝트가 이미 존재합니다. 다른 이름을 선택해주세요.',
+    en: 'A project with the same name already exists.\nPlease choose a different name.',
+    ko: '동일한 이름의 프로젝트가 이미 존재합니다.\n다른 이름을 선택해주세요.',
   },
   // 프로젝트 수정
   SUCCESS_PROJECT_UPDATED: {
