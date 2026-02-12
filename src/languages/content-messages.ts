@@ -216,4 +216,34 @@ export const ContentMessages = {
     en: 'Your Projects',
     ko: '나의 프로젝트',
   },
+  // 헤더
+  PROFILE_BUTTON: {
+    en: 'Profile',
+    ko: '프로필',
+  },
+  LOGOUT_BUTTON: {
+    en: 'Logout',
+    ko: '로그아웃',
+  },
+  // 회원가입 모달
+  SIGN_UP_TITLE: {
+    en: 'Create Account',
+    ko: '계정 생성',
+  },
+  NICK_NAME_LABEL: {
+    en: 'Nickname',
+    ko: '닉네임',
+  },
+  NICK_NAME_PLACEHOLDER: {
+    en: 'Enter your nickname',
+    ko: '닉네임을 입력해주세요',
+  },
+  PASSWORD_TOOLTIP: {
+    en: 'Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character (@, !, $, %, *, ?, &).',
+    ko: '비밀번호는 대문자, 소문자, 숫자 및 특수문자(@, !, $, %, *, ?, &)를 포함해야 합니다.',
+  },
+  RE_PASSWORD_PLACEHOLDER: {
+    en: 'Re-enter your password',
+    ko: '비밀번호를 다시 입력해주세요',
+  },
 };

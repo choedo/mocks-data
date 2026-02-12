@@ -1,17 +1,19 @@
 import { signOut } from '@/api/auth';
-import { Button } from '@/components/ui/button';
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover';
 import { useProfileData } from '@/hooks/profile/use-profile-data';
+import { ContentMessages } from '@/languages/content-messages';
 import { useSession } from '@/store/session';
+import { useLanguage } from '@/store/translation';
 import { PopoverClose } from '@radix-ui/react-popover';
 import { UserIcon } from 'lucide-react';
 
 export default function ProfileButton() {
   const session = useSession();
+  const language = useLanguage();
   const { data: profile } = useProfileData(session?.user.id);
 
   if (!session) return null;
@@ -34,19 +36,16 @@ export default function ProfileButton() {
       </PopoverTrigger>
       <PopoverContent className="flex w-40 flex-col p-0">
         <PopoverClose asChild className={'p-2'}>
-          <Button
-            variant={'link'}
-            className="hover:bg-muted cursor-pointer px-4 py-3 text-sm"
-          >
-            프로필
-          </Button>
+          <div className="hover:bg-muted cursor-pointer px-4 py-3 text-sm">
+            {ContentMessages.PROFILE_BUTTON[language]}
+          </div>
         </PopoverClose>
         <PopoverClose asChild className={'p-2'}>
           <div
             onClick={signOut}
             className="hover:bg-muted cursor-pointer px-4 py-3 text-sm"
           >
-            로그아웃
+            {ContentMessages.LOGOUT_BUTTON[language]}
           </div>
         </PopoverClose>
       </PopoverContent>

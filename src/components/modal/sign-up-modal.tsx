@@ -18,8 +18,12 @@ import {
   TooltipTrigger,
 } from '@/components/ui/tooltip';
 import { useSignUp } from '@/hooks/auth/use-sign-up';
+import { useLanguage } from '@/store/translation';
+import { AlertMessages } from '@/languages/alert-messages';
+import { ContentMessages } from '@/languages/content-messages';
 
 export default function SignUpModal() {
+  const language = useLanguage();
   const store = useSignUpModal();
   const {
     isOpen,
@@ -46,7 +50,8 @@ export default function SignUpModal() {
       close();
     },
     onError: (error) => {
-      const message = error.message ? error.message : 'Error';
+      console.error(error);
+      const message = AlertMessages.FAIL_SIGN_UP[language];
       toastMessage.error(message);
     },
   });
@@ -56,7 +61,7 @@ export default function SignUpModal() {
     // 닉네임
     const inputNickname = nickname.trim();
     if (inputNickname === '') {
-      toastMessage.info('Please enter your nickname');
+      toastMessage.info(AlertMessages.REQUIRED_NICKNAME_INPUT[language]);
 
       if (nicknameRef.current) nicknameRef.current.focus();
       return;
@@ -65,14 +70,14 @@ export default function SignUpModal() {
     // 이메일
     const inputEmail = email.trim();
     if (inputEmail === '') {
-      toastMessage.info('Please enter your email');
+      toastMessage.info(AlertMessages.REQUIRED_EMAIL_INPUT[language]);
 
       if (emailRef.current) emailRef.current.focus();
       return;
     }
 
     if (!validateCheck.email(inputEmail)) {
-      toastMessage.info('Please check your email');
+      toastMessage.info(AlertMessages.NOT_EMAIL_FORMAT[language]);
 
       if (emailRef.current) emailRef.current.focus();
 
@@ -83,29 +88,27 @@ export default function SignUpModal() {
     const inputPassword = password.trim();
     const inputRePassword = rePassword.trim();
     if (inputPassword === '') {
-      toastMessage.info('Please enter your password');
+      toastMessage.info(AlertMessages.REQUIRED_PASSWORD_INPUT[language]);
 
       if (passwordRef.current) passwordRef.current.focus();
       return;
     }
 
     if (!validateCheck.password(inputPassword)) {
-      toastMessage.info(
-        'Must include uppercase, lowercase, number, and a special character (!, @, #, $, %, ^, (, ), &)',
-      );
+      toastMessage.info(AlertMessages.NOT_PASSWORD_FORMAT[language]);
       if (passwordRef.current) passwordRef.current.focus();
       return;
     }
 
     if (inputRePassword === '') {
-      toastMessage.info('Please enter your re-password');
+      toastMessage.info(AlertMessages.REQUIRED_RE_PASSWORD_INPUT[language]);
 
       if (rePasswordRef.current) rePasswordRef.current.focus();
       return;
     }
 
     if (inputPassword !== inputRePassword) {
-      toastMessage.info('Password does not match');
+      toastMessage.info(AlertMessages.NOT_MATCH_PASSWORD[language]);
 
       if (rePasswordRef.current) {
         setRePassword('');
@@ -136,34 +139,40 @@ export default function SignUpModal() {
   return (
     <Dialog open={isOpen} onOpenChange={close}>
       <DialogContent>
-        <DialogTitle>Create Account</DialogTitle>
+        <DialogTitle>{ContentMessages.SIGN_UP_TITLE[language]}</DialogTitle>
         <div className={`flex flex-col gap-4`}>
           <div className={`flex flex-col gap-2`}>
-            <Label htmlFor={'nickname'}>Nickname</Label>
+            <Label htmlFor={'nickname'}>
+              {ContentMessages.NICK_NAME_LABEL[language]}
+            </Label>
             <Input
               ref={nicknameRef}
               id={'nickname'}
               value={nickname}
               onChange={(e) => setNickname(e.target.value)}
-              placeholder={'Enter your nickname'}
+              placeholder={ContentMessages.NICK_NAME_PLACEHOLDER[language]}
               disabled={isPending}
             />
           </div>
           <div className={`flex flex-col gap-2`}>
-            <Label htmlFor={'email'}>Email</Label>
+            <Label htmlFor={'email'}>
+              {ContentMessages.EMAIL_LABEL[language]}
+            </Label>
             <Input
               ref={emailRef}
               id={'email'}
               type={'email'}
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              placeholder={'Enter your email'}
+              placeholder={ContentMessages.EMAIL_PLACEHOLDER[language]}
               disabled={isPending}
             />
           </div>
           <div className={`flex flex-col gap-2`}>
             <div className={`flex gap-1`}>
-              <Label htmlFor={'password'}>Password</Label>
+              <Label htmlFor={'password'}>
+                {ContentMessages.PASSWORD_LABEL[language]}
+              </Label>
               <Tooltip>
                 <TooltipTrigger asChild>
                   <CircleQuestionMarkIcon
@@ -174,9 +183,7 @@ export default function SignUpModal() {
                 </TooltipTrigger>
                 <TooltipContent>
                   <p className={`max-w-sm w-full`}>
-                    Password must contain at least one uppercase letter, one
-                    lowercase letter, one number, and one special character (@,
-                    !, $, %, *, ?, &).
+                    {ContentMessages.PASSWORD_TOOLTIP[language]}
                   </p>
                 </TooltipContent>
               </Tooltip>
@@ -187,7 +194,7 @@ export default function SignUpModal() {
               type={'password'}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              placeholder={'Enter your password'}
+              placeholder={ContentMessages.PASSWORD_PLACEHOLDER[language]}
               disabled={isPending}
             />
             <Input
@@ -196,7 +203,7 @@ export default function SignUpModal() {
               type={'password'}
               value={rePassword}
               onChange={(e) => setRePassword(e.target.value)}
-              placeholder={'Enter your password one more time'}
+              placeholder={ContentMessages.RE_PASSWORD_PLACEHOLDER[language]}
               disabled={isPending}
             />
           </div>
@@ -208,7 +215,7 @@ export default function SignUpModal() {
               onClick={handleSignUpClick}
               disabled={isPending}
             >
-              Sign Up
+              {ContentMessages.SIGN_UP_BUTTON[language]}
             </Button>
             <Button
               variant={'outline'}
@@ -216,7 +223,7 @@ export default function SignUpModal() {
               onClick={close}
               disabled={isPending}
             >
-              Cancel
+              {ContentMessages.CANCEL_BUTTON[language]}
             </Button>
           </div>
         </DialogFooter>

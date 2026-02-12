@@ -173,8 +173,9 @@ export default function SignInPage() {
             checked={checked}
             onCheckedChange={(e) => setChecked(e as boolean)}
             disabled={isPending}
+            className={'cursor-pointer'}
           />
-          <Label htmlFor={`checkbox`}>
+          <Label htmlFor={`checkbox`} className={'cursor-pointer'}>
             {ContentMessages.SAVE_EMAIL_CHECKBOX[languages]}
           </Label>
         </div>
@@ -187,7 +188,7 @@ export default function SignInPage() {
       </CardContent>
       <CardFooter>
         <Button
-          className={`w-full`}
+          className={`w-full cursor-pointer`}
           onClick={handleLoginClick}
           disabled={isPending}
         >

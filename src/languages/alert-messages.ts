@@ -177,4 +177,30 @@ export const AlertMessages: Record<string, Record<Language, string>> = {
     en: 'Please enter as many as you want to create.',
     ko: '생성할 개수를 입력해주세요.',
   },
+  // 회원가입
+  FAIL_SIGN_UP: {
+    en: 'Failed to sign up. Please try again.',
+    ko: '회원가입에 실패하였습니다. 다시 시도해주세요.',
+  },
+  REQUIRED_NICKNAME_INPUT: {
+    en: 'Please enter your nickname.',
+    ko: '닉네임을 입력해주세요.',
+  },
+  NOT_PASSWORD_FORMAT: {
+    en: 'Password must include uppercase, lowercase, number,\nand a special character (!, @, #, $, %, ^, (, ), &).',
+    ko: '비밀번호는 대문자, 소문자, 숫자 및\n특수문자(!, @, #, $, %, ^, (, ), &)를 포함해야 합니다.',
+  },
+  REQUIRED_RE_PASSWORD_INPUT: {
+    en: 'Please enter your re-password.',
+    ko: '비밀번호 확인을 입력해주세요.',
+  },
+  NOT_MATCH_PASSWORD: {
+    en: 'Password does not match. Please check again.',
+    ko: '비밀번호가 일치하지 않습니다. 다시 확인해주세요.',
+  },
+  // 회원전용
+  MEMBERS_ONLY_ACCESS: {
+    en: 'This service is for members only.\nPlease sign in to use this service.',
+    ko: '이 서비스는 회원 전용입니다.\n로그인 후 이용해주세요.',
+  },
 };
