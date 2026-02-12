@@ -18,7 +18,7 @@ export function useCreateTable(callbacks?: UseMutationCallback) {
           if (!prevTables)
             throw new Error('테이블 데이터가 존재하지 않습니다.');
 
-          return [...prevTables, newTable];
+          return [...prevTables, { ...newTable, columns: [] }];
         },
       );
     },
