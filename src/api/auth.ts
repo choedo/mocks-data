@@ -8,6 +8,8 @@ export async function signOut() {
       scope: 'local',
     });
   }
+
+  location.href = '/sign-in';
 }
 
 export async function signUp({
