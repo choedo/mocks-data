@@ -11,7 +11,8 @@ type Props = {
 export default function ProjectBookmarkButton(props: Props) {
   const { mutate: toggleProjectBookmark } = useToggleProjectBookmark();
 
-  const handleBookmarkClick = () => {
+  const handleBookmarkClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    e.stopPropagation();
     toggleProjectBookmark({
       projectId: props.projectId,
       current: props.isBookmark,
@@ -23,7 +24,7 @@ export default function ProjectBookmarkButton(props: Props) {
       className={`cursor-pointer hover:bg-muted-foreground p-1 rounded-full ${
         props.isBookmark ? 'bookmark' : 'non-bookmark'
       }`}
-      onClick={handleBookmarkClick}
+      onClick={(e) => handleBookmarkClick(e)}
     >
       <StarIcon
         fill={props.isBookmark ? 'yellow' : 'transparent'}
