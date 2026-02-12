@@ -17,6 +17,8 @@ export default function BookmarkButton() {
 
   const isLoading = isProjectFetch;
 
+  if (!session) return null;
+
   return (
     <Popover>
       <PopoverTrigger className={'cursor-pointer'}>
