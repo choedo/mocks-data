@@ -44,10 +44,10 @@
 
 ```bash
 # 1. 저장소 클론
-git clone [https://github.com/사용자명/레포지토리명.git](https://github.com/사용자명/레포지토리명.git)
+git clone https://github.com/choedo/mockstack.git
 
 # 2. 프로젝트 폴더 진입
-cd 레포지토리명
+cd mockstack
 
 # 3. 의존성 패키지 설치
 npm install
