@@ -6,6 +6,7 @@ import { fetchProfile, createProfile } from '@/api/profile';
 
 export function useProfileData(userId?: string) {
   const session = useSession();
+  console.log(session);
   const isMine = userId === session?.user.id;
 
   return useQuery({
@@ -13,7 +14,10 @@ export function useProfileData(userId?: string) {
     queryFn: async () => {
       try {
         const profile = await fetchProfile(userId!);
-        return profile;
+        return {
+          ...profile,
+          email: session?.user.email || '',
+        };
       } catch (error) {
         if (isMine && (error as PostgrestError).code === 'PGRST116') {
           return await createProfile(userId!);
