@@ -30,12 +30,12 @@ export default function ProjectEditorModal() {
   const { mutate: createProject, isPending: isCreateProjectPending } =
     useCreateProject({
       onSuccess: () => {
-        toastMessage.success(AlertMessages.CREATE_PROJECT_SUCCESS[language]);
+        toastMessage.success(AlertMessages.SUCCESS_PROJECT_CREATED[language]);
         close();
       },
       onError: (error) => {
         console.error(error);
-        const message = AlertMessages.CREATE_PROJECT_FAIL[language];
+        const message = AlertMessages.FAIL_PROJECT_CREATED[language];
         toastMessage.error(message);
       },
     });

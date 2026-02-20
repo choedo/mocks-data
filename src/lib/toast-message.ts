@@ -16,7 +16,7 @@ type ToastOption = {
 function toastMessageAction(
   type: ToastAction,
   msg: string,
-  options?: ToastOption
+  options?: ToastOption,
 ) {
   if (options && !options.position) {
     options.position = 'top-center';
