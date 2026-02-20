@@ -1,5 +1,10 @@
 import React from 'react';
-import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog';
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog';
 import { useColumnEditorModal } from '@/store/column-editor-modal';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
@@ -8,10 +13,11 @@ import {
   SelectContent,
   SelectGroup,
   SelectItem,
+  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { COLUMN_TYPES } from '@/constants/column';
+import { CUSTOM_COLUMN_TYPES, DEFAULT_COLUMN_TYPES } from '@/constants/column';
 import ColumnOptionSelector from '@/components/column/column-option-selector';
 import type { ColumnOptions, ColumnTypes } from '@/types/data';
 import { useCreateColumn } from '@/hooks/column/use-create-column';
@@ -108,14 +114,20 @@ export default function ColumnEditorModal() {
     }
 
     // 컬럼명 중복 체크
-    const duplicateNameCheck = await duplicateCheckColumnName({
-      tableId: columnEditModal.tableId,
-      title: title,
-    });
+    // CREATE 모드인 경우 무조건 체크, EDIT 모드인 경우 컬럼명이 변경된 경우에만 체크
+    if (
+      columnEditModal.mode === 'CREATE' ||
+      (columnEditModal.mode === 'EDIT' && title !== columnEditModal.title)
+    ) {
+      const duplicateNameCheck = await duplicateCheckColumnName({
+        tableId: columnEditModal.tableId,
+        title: title,
+      });
 
-    if (!duplicateNameCheck) {
-      toastMessage.info(AlertMessages.UNIQUE_COLUMN_NAME[language]);
-      return;
+      if (!duplicateNameCheck) {
+        toastMessage.info(AlertMessages.UNIQUE_COLUMN_NAME[language]);
+        return;
+      }
     }
 
     const validateCheck = columnValidateCheck(options);
@@ -179,11 +191,13 @@ export default function ColumnEditorModal() {
       onOpenChange={columnEditModal.actions.close}
     >
       <DialogContent>
-        <DialogTitle>
-          {columnEditModal.mode === 'CREATE'
-            ? ContentMessages.CREATE_COLUMN_TITLE[language]
-            : ContentMessages.EDIT_COLUMN_TITLE[language]}
-        </DialogTitle>
+        <DialogHeader>
+          <DialogTitle>
+            {columnEditModal.mode === 'CREATE'
+              ? ContentMessages.CREATE_COLUMN_TITLE[language]
+              : ContentMessages.EDIT_COLUMN_TITLE[language]}
+          </DialogTitle>
+        </DialogHeader>
         <div className={'flex flex-col gap-4'}>
           <div className={'flex flex-col gap-2'}>
             <Label htmlFor={'title'}>
@@ -220,7 +234,24 @@ export default function ColumnEditorModal() {
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
-                  {Object.values(COLUMN_TYPES).map((item, index) => (
+                  <SelectLabel>
+                    {ContentMessages.COLUMN_DEFAULT_VALUE_LABEL[language]}
+                  </SelectLabel>
+                  {Object.values(DEFAULT_COLUMN_TYPES).map((item, index) => (
+                    <SelectItem
+                      key={`select-item-${item.value}-${index}`}
+                      value={item.value}
+                    >
+                      {item.title}
+                    </SelectItem>
+                  ))}
+                </SelectGroup>
+
+                <SelectGroup>
+                  <SelectLabel>
+                    {ContentMessages.COLUMN_CUSTOM_VALUE_LABEL[language]}
+                  </SelectLabel>
+                  {Object.values(CUSTOM_COLUMN_TYPES).map((item, index) => (
                     <SelectItem
                       key={`select-item-${item.value}-${index}`}
                       value={item.value}

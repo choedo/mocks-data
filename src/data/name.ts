@@ -120,3 +120,31 @@ export const KOREAN_FIRST_NAMES = [
   '율',
   '봄',
 ] as const;
+
+// Last names
+export const ENGLISH_LAST_NAMES = [
+  'Smith',
+  'Johnson',
+  'Williams',
+  'Brown',
+  'Jones',
+  'Garcia',
+  'Miller',
+  'Davis',
+  'Rodriguez',
+  'Martinez',
+] as const;
+
+// First names
+export const ENGLISH_FIRST_NAMES = [
+  'James',
+  'Mary',
+  'John',
+  'Patricia',
+  'Robert',
+  'Jennifer',
+  'Michael',
+  'Linda',
+  'William',
+  'Elizabeth',
+] as const;

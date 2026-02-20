@@ -15,6 +15,7 @@ import {
 import { MOCK_DATA_ITEMS } from '@/data/mock';
 import type { MockDataType } from '@/types/data';
 import toastMessage from '@/lib/toast-message';
+import Pre from '@/components/ui/pre';
 
 export default function MockResultModal() {
   const store = useMockResultModal();
@@ -73,9 +74,9 @@ export default function MockResultModal() {
             )}
           </Button>
 
-          <pre>
+          <Pre>
             <code>{store.mocks[dataType]}</code>
-          </pre>
+          </Pre>
         </ScrollArea>
       </DialogContent>
     </Dialog>

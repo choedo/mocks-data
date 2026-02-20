@@ -51,7 +51,9 @@ export function DatePicker({
           {date ? (
             <span>{dayjs(date).format(format)}</span>
           ) : (
-            <span className={'text-muted-foreground'}>{placeholder}</span>
+            <span className={'text-muted-foreground line-clamp-1 truncate'}>
+              {placeholder}
+            </span>
           )}
           <CalendarIcon />
         </Button>

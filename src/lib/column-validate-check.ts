@@ -34,6 +34,15 @@ export function columnValidateCheck(options: ColumnOptions): ReturnType {
       return enumValidateCheck(options);
     case 'boolean':
       return booleanValidateCheck(options);
+    case 'name':
+    case 'email':
+    case 'address':
+    case 'contact':
+      return {
+        status: 'Success',
+        message: AlertMessages.SUCCESS,
+        data: options,
+      };
     default:
       return { status: 'Fail', message: AlertMessages.DEFAULT_FAIL_MESSAGE };
   }

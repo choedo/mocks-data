@@ -167,11 +167,11 @@ export const ContentMessages = {
   },
   PICK_MINIMUM_DATE_PLACEHOLDER: {
     en: 'Select minimum date (optional)',
-    ko: '최소 날짜를 선택해주세요 (선택사항)',
+    ko: '최소 날짜 (선택사항)',
   },
   PICK_MAXIMUM_DATE_PLACEHOLDER: {
     en: 'Select maximum date (optional)',
-    ko: '최대 날짜를 선택해주세요 (선택사항)',
+    ko: '최대 날짜 (선택사항)',
   },
   OPTIONS_LABEL: {
     en: 'Options',
@@ -245,5 +245,24 @@ export const ContentMessages = {
   RE_PASSWORD_PLACEHOLDER: {
     en: 'Re-enter your password',
     ko: '비밀번호를 다시 입력해주세요',
+  },
+
+  COLUMN_DEFAULT_VALUE_LABEL: {
+    en: 'Default Value',
+    ko: '기본값',
+  },
+  COLUMN_CUSTOM_VALUE_LABEL: {
+    en: 'Custom Value',
+    ko: '커스텀값',
+  },
+
+  // 컬럼 옵션
+  LANGUAGES_PLACEHOLDER: {
+    en: 'Select a language',
+    ko: '언어를 선택해주세요',
+  },
+  CONTACT_FORMAT_PLACEHOLDER: {
+    en: 'Enter contact separator (optional)',
+    ko: '연락처 구분자 (선택사항)',
   },
 };

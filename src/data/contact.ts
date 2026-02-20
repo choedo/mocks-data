@@ -1,11 +1,17 @@
 export const EMAIL_DOMAINS = [
-  'naver.com',
-  'gmail.com',
-  'daum.net',
-  'kakao.com',
-  'nate.com',
-  'outlook.com',
-  'icloud.com',
+  // 'naver.com',
+  // 'gmail.com',
+  // 'daum.net',
+  // 'kakao.com',
+  // 'nate.com',
+  // 'outlook.com',
+  // 'icloud.com',
+  'example.com',
+  'example.co.kr',
+  'example.org',
+  'test.com',
+  'test.co.kr',
+  'test.org',
 ] as const;
 
 export const MOBILE_PREFIXES = [
