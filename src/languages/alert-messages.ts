@@ -82,6 +82,14 @@ export const AlertMessages: Record<string, Record<Language, string>> = {
     en: 'Failed to delete the project.',
     ko: '프로젝트 삭제에 실패하였습니다.',
   },
+  CONFIRM_DELETE_PROJECT_TITLE: {
+    en: 'Delete Project',
+    ko: '프로젝트 삭제',
+  },
+  CONFIRM_DELETE_PROJECT_DESCRIPTION: {
+    en: 'Are you sure you want to delete this project?\nAll data related to this project will be deleted and cannot be recovered.',
+    ko: '정말 이 프로젝트를 삭제하시겠습니까?\n이 프로젝트와 관련된 모든 데이터가 삭제되며 복구할 수 없습니다.',
+  },
   // 컬럼 생성
   SUCCESS_COLUMN_CREATED: {
     en: 'The column has been created successfully.',

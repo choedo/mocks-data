@@ -14,6 +14,8 @@ import { AlertMessages } from '@/languages/alert-messages';
 import { useLanguage } from '@/store/translation';
 import { ContentMessages } from '@/languages/content-messages';
 import { Card } from '@/components/ui/card';
+import ProjectDeleteButton from '@/components/project/project-delete-button';
+import Pre from '@/components/ui/pre';
 
 type Props = {
   projectId: number;
@@ -132,20 +134,23 @@ export default function ProjectDetailInformation({ projectId }: Props) {
               disabled={isPending}
             />
           ) : (
-            <pre className={'text-sm text-muted-foreground'}>
+            <Pre className={'text-sm text-muted-foreground'}>
               {projectData?.project_description}
-            </pre>
+            </Pre>
           )}
         </React.Fragment>
       )}
 
-      <Button
-        variant={'outline'}
-        className={'absolute top-6 right-4 cursor-pointer'}
-        onClick={() => setIsEdit(!isEdit)}
-      >
-        <SquarePenIcon />
-      </Button>
+      <div className={'absolute top-6 right-4 flex gap-2'}>
+        <Button
+          variant={'outline'}
+          className={'cursor-pointer'}
+          onClick={() => setIsEdit(!isEdit)}
+        >
+          <SquarePenIcon />
+        </Button>
+        <ProjectDeleteButton projectId={projectId} />
+      </div>
 
       {isEdit ? (
         <div className={'flex gap-2 justify-end items-center'}>

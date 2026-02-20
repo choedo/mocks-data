@@ -1,3 +1,5 @@
+import type { buttonVariants } from '@/components/ui/button';
+import type { VariantProps } from 'class-variance-authority';
 import type React from 'react';
 import { create } from 'zustand';
 import { combine, devtools } from 'zustand/middleware';
@@ -13,8 +15,11 @@ type OpenState = {
   onPositive?: () => void;
   onNegative?: () => void;
   cancelText?: string;
+  cancelVariant?: VariantProps<typeof buttonVariants>['variant'];
   confirmText?: string;
+  confirmVariant?: VariantProps<typeof buttonVariants>['variant'];
   content?: React.ReactNode;
+  icon?: React.ReactNode;
 };
 
 type State = CloseState | OpenState;

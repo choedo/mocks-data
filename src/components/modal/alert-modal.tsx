@@ -7,7 +7,9 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
+  AlertDialogMedia,
 } from '@/components/ui/alert-dialog';
+import Pre from '@/components/ui/pre';
 import { useAlertModal } from '@/store/alert-modal';
 
 export default function AlertModal() {
@@ -29,9 +31,12 @@ export default function AlertModal() {
     <AlertDialog open={store.isOpen}>
       <AlertDialogContent>
         <AlertDialogHeader>
+          {store.icon ? (
+            <AlertDialogMedia>{store.icon}</AlertDialogMedia>
+          ) : null}
           <AlertDialogTitle>{store.title}</AlertDialogTitle>
           <AlertDialogDescription asChild>
-            <pre>{store.description}</pre>
+            <Pre>{store.description}</Pre>
           </AlertDialogDescription>
         </AlertDialogHeader>
         {store.content ? store.content : null}
@@ -39,12 +44,14 @@ export default function AlertModal() {
           <AlertDialogCancel
             className={'cursor-pointer'}
             onClick={handleCancelClick}
+            variant={store.cancelVariant || 'outline'}
           >
             {store.cancelText ? store.cancelText : 'Cancel'}
           </AlertDialogCancel>
           <AlertDialogAction
             className={'cursor-pointer'}
             onClick={handleActionClick}
+            variant={store.confirmVariant || 'default'}
           >
             {store.confirmText ? store.confirmText : 'Confirm'}
           </AlertDialogAction>
